@@ -9,7 +9,8 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update \
-    && apt-get clean
+    && apt-get clean \
+    && apt install -y git
 
 # install dependencies
 RUN pip install --upgrade pip
