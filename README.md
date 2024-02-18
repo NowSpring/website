@@ -24,3 +24,6 @@
 ## その他
 
 - [タブは半角スペース2つにしたい](https://simplesimples.com/web/application/vscode/tab-space/)
+- `rm -rf .git`：gitファイルを削除
+- `rm db.sqlite3`：データベースファイルを削除
+- `rm forum/migrations/00*`：マイグレーション設定ファイルを削除
