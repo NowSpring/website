@@ -27,3 +27,4 @@
 - `rm -rf .git`：gitファイルを削除
 - `rm db.sqlite3`：データベースファイルを削除
 - `rm apps/app_name/migrations/00*`：マイグレーション設定ファイルを削除
+- `rm -rf node_modules package-lock.json && npm install`：clientサーバーで`npm run serve`実行に`sh: vue-cli-service: not found`のエラーが出た場合の対処
