@@ -7,6 +7,13 @@
 
 ## バックエンドサーバー 編集
 
+### DB関連
+
+- `python manage.py dbbackup`：DBのバックアップ作成
+- `python manage.py dbrestore`：バックアップからデータをリストア
+
+### その他
+
 - [Djangoでアプリをアプリだけのフォルダににまとめる方法](https://qiita.com/HiroakiIwata/items/b75fff69c61fddd4487d)
 
 ## フロントエンドサーバー 編集

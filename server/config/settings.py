@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'dbbackup',
     # Installed app
     'members'
 ]
@@ -155,3 +156,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ]
 }
+
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/'dump'}
