@@ -14,6 +14,11 @@
 - `rm db.sqlite3`：DBファイルを削除
 - `rm apps/app_name/migrations/00*`：マイグレーション設定ファイルを削除
 
+### フィルタを実装したデータ取得
+
+- [Django Rest Framework で 特定のデータだけレスポンスするようにフィルタを設定する](https://qiita.com/Ajyarimochi/items/7e22de20292ca57ea8dc)
+- [【Django Rest Framework】Django-Filterを使ってフィルタ機能をカスタマイズする](https://qiita.com/Ajyarimochi/items/a88331825667ce27cf48)
+
 ### その他
 
 - [Djangoでアプリをアプリだけのフォルダににまとめる方法](https://qiita.com/HiroakiIwata/items/b75fff69c61fddd4487d)
