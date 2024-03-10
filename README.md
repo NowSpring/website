@@ -25,9 +25,13 @@
 
 ## フロントエンドサーバー 編集
 
-### Vuetify
+### Vite, Pinia, Router
 
-- Vuetifyの追加：`vue add vuetify`
+- [Vite, Pinia、Routerの導入](https://designsupply-web.com/media/programming/7603/)
+
+### デザイン
+
+- [Vuetify, mdiの導入](https://ashitaka-blog.com/vuetify3%E3%81%93%E3%81%A8%E3%81%AF%E3%81%98%E3%82%812%EF%BC%88vite%EF%BC%89/)
 
 ### .eslintrc.json 作成及び編集
 
@@ -45,10 +49,13 @@
 ### vscode操作
 
 - [タブは半角スペース2つにしたい](https://simplesimples.com/web/application/vscode/tab-space/)
+- [VSCodeとDockerコンテナを接続](https://zenn.dev/ochamikan/articles/24465ac14a9e24#vscode%E3%81%A8docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%82%92%E6%8E%A5%E7%B6%9A)
 
 ### git操作
 
 - `rm -rf .git`：gitファイルを削除
 - `git branch --contains`：作業中のブランチを表示
 - [githubアカウント切り替え](https://note.com/bluecode_inc/n/n3f67774c8642)
+- `chown -R 【パーミッション値】 【ファイルパス】`：ディレクトリ以下のファイルの権限を一括変更
+
  
