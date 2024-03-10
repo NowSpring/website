@@ -2,8 +2,8 @@ import axios from "axios";
 
 // ログイン用のaxiosインスタンス
 const loginClient = axios.create({
-  // baseURL: "http://0.0.0.0:8000/", // mac
-  baseURL: "http://127.0.0.1:8000/", // windows
+  baseURL: "http://0.0.0.0:8000/", // mac
+  // baseURL: "http://127.0.0.1:8000/", // windows
   withCredentials: false,
   headers: {
     Accept: "application/json",

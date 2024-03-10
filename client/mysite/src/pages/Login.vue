@@ -6,7 +6,7 @@
     >
       <v-card-title class="d-flex justify-center">
         <h3 class="title font-weight-bold">
-          Welcome to Comicle!!
+          Welcome!!
         </h3>
       </v-card-title>
       <v-card-text>
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { ref, reactive, toRaw } from 'vue';
 import { useRouter } from 'vue-router';
-import EventService from '@/plugins/EventService.js';
+import EventService from '@/plugins/EventService';
 
 const router = useRouter();
 
@@ -65,7 +65,7 @@ const submitLogin = () => {
       window.localStorage.setItem('token', response.data.token);
       window.localStorage.setItem('user_id', response.data.user_id);
       window.localStorage.setItem('user_name', response.data.user_name);
-      router.push({ name: 'comicmaster' });
+      router.push({ name: 'home' });
     })
     .catch((error) => {
       console.log("Error" + error);
