@@ -1,17 +1,16 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Login from "./pages/Login.vue";
-import Home from "./pages/Home.vue";
-
+import { createRouter, createWebHistory } from 'vue-router';
+import Login from './pages/Login.vue';
+import Home from './pages/Home.vue';
 
 const routes = [
   {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     component: Login,
   },
   {
-    path: "/",
-    name: "home",
+    path: '/',
+    name: 'home',
     component: Home,
     meta: { requiresAuth: true },
   },
@@ -23,8 +22,8 @@ const useRouter = createRouter({
 });
 
 useRouter.beforeEach((to) => {
-  if (to.meta.requiresAuth && window.localStorage.getItem("token") === null) {
-    return { name: "login" };
+  if (to.meta.requiresAuth && window.localStorage.getItem('token') === null) {
+    return { name: 'login' };
   }
 });
 
