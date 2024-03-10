@@ -27,7 +27,7 @@
 
 ### Vite, Pinia, Router
 
-- [Vite, Pinia、Router の導入](https://designsupply-web.com/media/programming/7603/)
+- [Vite, Pinia, Router の導入](https://designsupply-web.com/media/programming/7603/)
 
 ### デザイン
 
