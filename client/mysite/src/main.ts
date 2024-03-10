@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { useRouter } from './route'
 
 // Vuetify
 import 'vuetify/styles'
@@ -9,6 +8,8 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+
+import useRouter from './route'
 import './style.css'
 import App from './App.vue'
 
