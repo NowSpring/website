@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:16-alpine
+FROM node:18.12-alpine
 
 WORKDIR /usr/src
 
