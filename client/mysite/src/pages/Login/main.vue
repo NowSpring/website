@@ -1,41 +1,36 @@
 <template>
   <div class="overlay">
-    <v-card 
-      width="400px" 
-      class="mx-auto mt-5"
-    >
+    <v-card width="400px" class="mx-auto mt-5">
       <v-card-title class="d-flex justify-center">
-        <h3 class="title font-weight-bold">
-          Welcome!!
-        </h3>
+        <h3 class="title font-weight-bold">Welcome!!</h3>
       </v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field 
-            prepend-icon="mdi-account-circle" 
-            label="UserName" 
-            v-model="formState.username" 
+          <v-text-field
+            prepend-icon="mdi-account-circle"
+            label="UserName"
+            v-model="formState.username"
           />
-          <v-text-field 
+          <v-text-field
             :type="showPassword ? 'text' : 'password'"
             @click:append="showPassword = !showPassword"
-            prepend-icon="mdi-lock" 
+            prepend-icon="mdi-lock"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             label="Password"
             v-model="formState.password"
-          />   
+          />
           <v-card-actions class="d-flex justify-center">
             <div class="button-container">
-              <v-btn 
-                class="info" 
-                :disabled="formState.username === '' || formState.password === ''"
+              <v-btn
+                class="info"
+                :disabled="
+                  formState.username === '' || formState.password === ''
+                "
                 @click.prevent="submitLogin"
               >
                 ログイン
               </v-btn>
-              <v-btn>
-                新規作成
-              </v-btn>
+              <v-btn> 新規作成 </v-btn>
             </div>
           </v-card-actions>
         </v-form>
@@ -68,7 +63,7 @@ const submitLogin = () => {
       router.push({ name: 'home' });
     })
     .catch((error) => {
-      console.log("Error" + error);
+      console.log('Error' + error);
     });
 };
 </script>
@@ -88,6 +83,6 @@ const submitLogin = () => {
 
 .button-container {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 </style>
