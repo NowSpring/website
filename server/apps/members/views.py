@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -7,10 +7,22 @@ from rest_framework.response import Response
 from members.models import Member
 from members.serializers import MemberSerializer
 
-class MemberViewSet(viewsets.ReadOnlyModelViewSet):
+class MemberViewSet(generics.RetrieveAPIView):
   
-    queryset = Member.objects.all()
-    serializer_class = MemberSerializer
+  queryset = Member.objects.all()
+  serializer_class = MemberSerializer
+
+
+class CreateMember(generics.CreateAPIView):
+  
+  queryset = Member.objects.all()
+  serializer_class = MemberSerializer
+  
+
+class UpdateMember(generics.UpdateAPIView):
+  
+  queryset = Member.objects.all()
+  serializer_class = MemberSerializer
 
 
 class CustmAuthToken(ObtainAuthToken):
