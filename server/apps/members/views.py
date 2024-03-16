@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from members.models import Member
 from members.serializers import MemberSerializer
 
-class MemberViewSet(generics.RetrieveAPIView):
+class MemberViewSet(viewsets.ReadOnlyModelViewSet):
   
   queryset = Member.objects.all()
   serializer_class = MemberSerializer
