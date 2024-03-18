@@ -1,17 +1,25 @@
 <script setup lang="ts">
-import { useForm, FieldBinding, FormActions } from 'vee-validate';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useForm } from 'vee-validate';
 import * as yup from 'yup';
-
+import EventService from '@/plugins/EventService';
 import Popup from '@/components/Popup.vue';
 
-// スキーマ定義には変更なし
+const router = useRouter();
+
 const schema = yup.object({
-  user_name: yup.string().required().label('UserName'),
-  email: yup.string().email().required().label('E-mail'),
+  username: yup.string().required().label('UserName'),
+  email: yup
+    .string()
+    .email()
+    .required()
+    .label('E-mail')
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'E-mail must be a valid email'),
   password: yup.string().min(6).required(),
 });
 
-const { defineField, handleSubmit, resetForm }: FormActions = useForm({
+const { defineField, handleSubmit, resetForm } = useForm({
   validationSchema: schema,
 });
 
@@ -21,18 +29,21 @@ const vuetifyConfig = (state): Record<string, any> => ({
   },
 });
 
-const [user_name, nameProps]: [ref: string, binding: FieldBinding] =
-  defineField('user_name', vuetifyConfig);
-const [email, emailProps]: [ref: string, binding: FieldBinding] = defineField(
-  'email',
-  vuetifyConfig,
-);
-const [password, passwordProps]: [ref: string, binding: FieldBinding] =
-  defineField('password', vuetifyConfig);
+const [username, usernameProps] = defineField('username', vuetifyConfig);
+const [email, emailProps] = defineField('email', vuetifyConfig);
+const [password, passwordProps] = defineField('password', vuetifyConfig);
 
 const onSubmit = handleSubmit((values) => {
-  console.log('Submitted with', values);
+  EventService.submitSignup(values)
+    .then((response) => {
+      router.push({ name: 'login' });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 });
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -43,8 +54,8 @@ const onSubmit = handleSubmit((values) => {
     <template v-slot:content>
       <v-text-field
         prepend-icon="mdi-account-circle"
-        v-model="user_name"
-        v-bind="nameProps"
+        v-model="username"
+        v-bind="usernameProps"
         label="UserName"
       />
       <v-text-field
@@ -55,19 +66,15 @@ const onSubmit = handleSubmit((values) => {
         type="email"
       />
       <v-text-field
+        :type="showPassword ? 'text' : 'password'"
+        @click:append="showPassword = !showPassword"
         prepend-icon="mdi-lock"
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         v-model="password"
         v-bind="passwordProps"
         label="Password"
-        type="password"
       />
-      <v-btn
-        color="primary"
-        :disabled="formState.username === '' || formState.password === ''"
-        @click.prevent="onSubmit"
-      >
-        登録
-      </v-btn>
+      <v-btn color="primary" @click.prevent="onSubmit"> 登録 </v-btn>
       <v-btn color="outline" class="ml-4" @click="resetForm()">
         リセット
       </v-btn>
