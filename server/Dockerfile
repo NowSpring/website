@@ -11,6 +11,7 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update \
     && apt-get clean \
     && apt install -y git \
+    && apt install -y procps \
     && apt install sqlite3 -y libsqlite3-dev
 
 # install dependencies
