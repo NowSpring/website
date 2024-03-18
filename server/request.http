@@ -1,0 +1,52 @@
+POST http://localhost:8000/api-token-auth/
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+###
+
+POST http://localhost:8000/api-token-auth/
+Content-Type: application/json
+
+{
+    "username": "test01",
+    "password": "is0397sv"
+}
+
+###
+# @prompt token
+
+GET http://localhost:8000/api/member/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+
+POST http://localhost:8000/api/member/
+Content-Type: application/json
+
+{
+  "username": "test02",
+  "email": "test02@co.jp",
+  "password": "is0397sv"
+}
+
+###
+# @prompt token
+
+PUT http://localhost:8000/api/member/2/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+{
+  "username": "test01",
+  "email": "test01@co.jp",
+  "password": "is0397sv",
+  "is_superuser": "true"
+}
+
+
+
