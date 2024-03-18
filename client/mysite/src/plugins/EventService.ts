@@ -11,6 +11,15 @@ const loginClient = axios.create({
   },
 });
 
+// サインアップ用のaxiosインスタンス
+const signupClient = axios.create({
+  baseURL: 'http://0.0.0.0:8000/api', // mac
+  // baseURL: "http://127.0.0.1:8000/api", //windows
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 // API用のaxiosインスタンス
 const apiClient = axios.create({
   baseURL: 'http://0.0.0.0:8000/api', // mac
@@ -34,13 +43,22 @@ apiClient.interceptors.request.use(
   },
 );
 
-interface LoginInfo {
+type LoginInfo = {
   username: string;
   password: string;
-}
+};
+
+type SignupInfo = {
+  username: string;
+  email: string;
+  password: string;
+};
 
 export default {
   submitLogin(logininfo: LoginInfo) {
     return loginClient.post('api-token-auth/', logininfo);
+  },
+  submitSignup(signupinfo: SignupInfo) {
+    return signupClient.post('member/', signupinfo);
   },
 };

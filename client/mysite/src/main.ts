@@ -12,6 +12,7 @@ import useRouter from '@/route';
 import '@/style.css';
 import App from '@/App.vue';
 
+// Vuetify
 const vuetify = createVuetify({
   components,
   directives,
