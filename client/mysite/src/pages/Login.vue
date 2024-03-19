@@ -55,10 +55,9 @@ const showPassword = ref(false);
 const submitLogin = () => {
   EventService.submitLogin(toRaw(formState))
     .then((response) => {
-      console.log(response.data);
       window.localStorage.setItem('token', response.data.token);
-      window.localStorage.setItem('user_id', response.data.user_id);
-      window.localStorage.setItem('user_name', response.data.user_name);
+      window.localStorage.setItem('id', response.data.id);
+      window.localStorage.setItem('username', response.data.username);
       router.push({ name: 'home' });
     })
     .catch((error) => {
