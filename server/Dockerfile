@@ -9,13 +9,14 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update \
-    && apt-get clean \
-    && apt install -y git \
-    && apt install -y procps \
-    && apt install sqlite3 -y libsqlite3-dev
+    && apt-get upgrade -y \
+    && apt-get install -y \
+    git \
+    procps \
+    sqlite3 \
+    libsqlite3-dev \
+    && pip install --upgrade pip
 
-# install dependencies
-RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
