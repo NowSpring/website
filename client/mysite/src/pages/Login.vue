@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService';
 
 const router = useRouter();
+const userPinia = userStore();
 
 const formState = reactive({
   username: '',
@@ -15,8 +17,10 @@ const submitLogin = () => {
   EventService.submitLogin(toRaw(formState))
     .then((response) => {
       window.localStorage.setItem('token', response.data.token);
-      window.localStorage.setItem('id', response.data.id);
-      window.localStorage.setItem('username', response.data.username);
+      // window.localStorage.setItem('id', response.data.id);
+      // window.localStorage.setItem('username', response.data.username);
+      userPinia.username = response.data.user.username;
+      userPinia.email = response.data.user.email;
       router.push({ name: 'home' });
     })
     .catch((error) => {

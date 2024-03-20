@@ -39,4 +39,6 @@ class CustmAuthToken(ObtainAuthToken):
     user = serializer.validated_data['user']
     token, created = Token.objects.get_or_create(user = user)
     
-    return Response({'token':token.key, 'id':user.pk, 'username':user.username})
+    user_serializer = MemberSerializer(user)
+    
+    return Response({'token':token.key, 'user': user_serializer.data})
