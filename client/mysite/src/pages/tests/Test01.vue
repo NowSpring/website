@@ -1,10 +1,8 @@
 <!-- https://zenn.dev/iandcinc/articles/5d4a4b4b3297c1 -->
 <script setup lang="ts">
-// import { useRoute } from 'vue-router/auto'
+import { ref } from 'vue';
 import { Field, Form, defineRule, type GenericObject } from 'vee-validate';
 import { required } from '@vee-validate/rules';
-
-// const route = useRoute('/tests/Test')
 
 defineRule('required', (value: string, params: string): boolean | string => {
   if (required(value)) {
