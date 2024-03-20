@@ -1,3 +1,20 @@
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const username = ref('');
+
+onMounted(() => {
+  username.value = window.localStorage.getItem('username');
+});
+
+const logOut = () => {
+  window.localStorage.removeItem('token');
+  window.localStorage.removeItem('user_id');
+  window.localStorage.removeItem('username');
+  router.push({ name: 'login' });
+};
+</script>
 <template>
   <v-app-bar app clippedLeft :height="60" color="primary">
     <v-btn icon @click="() => $router.push({ name: 'home' })">
@@ -17,22 +34,3 @@
     </v-btn>
   </v-app-bar>
 </template>
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-const username = ref('');
-
-onMounted(() => {
-  username.value = window.localStorage.getItem('username');
-});
-
-const logOut = () => {
-  window.localStorage.removeItem('token');
-  window.localStorage.removeItem('user_id');
-  window.localStorage.removeItem('username');
-  router.push({ name: 'login' });
-};
-</script>

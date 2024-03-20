@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, reactive, toRaw } from 'vue';
 import { useRouter } from 'vue-router';
 import EventService from '@/plugins/EventService';
 
