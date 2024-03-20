@@ -7,6 +7,7 @@ const userPinia = userStore();
 
 const logOut = () => {
   window.localStorage.removeItem('token');
+  window.sessionStorage.removeItem('user');
   router.push({ name: 'login' });
 };
 </script>
