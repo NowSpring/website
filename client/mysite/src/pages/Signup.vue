@@ -4,7 +4,6 @@ import { useRouter } from 'vue-router';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import EventService from '@/plugins/EventService';
-import Popup from '@/components/Popup.vue';
 
 const router = useRouter();
 
@@ -33,6 +32,8 @@ const [username, usernameProps] = defineField('username', vuetifyConfig);
 const [email, emailProps] = defineField('email', vuetifyConfig);
 const [password, passwordProps] = defineField('password', vuetifyConfig);
 
+const showPassword = ref(false);
+
 const onSubmit = handleSubmit((values) => {
   EventService.submitSignup(values)
     .then((response) => {
@@ -42,8 +43,6 @@ const onSubmit = handleSubmit((values) => {
       console.error('Error:', error);
     });
 });
-
-const showPassword = ref(false);
 </script>
 
 <template>

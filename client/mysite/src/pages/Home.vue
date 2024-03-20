@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
-import TopBar from '@/components/TopBar.vue';
-import HelloWorld from '@/components/HelloWorld.vue';
 
 const route = useRoute();
 const isParentRoute = computed(() => route.name === 'home');

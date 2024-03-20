@@ -1,11 +1,13 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import Components from 'unplugin-vue-components/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    Components(),
     // tsconfigPaths(),
   ],
   resolve: {
@@ -13,4 +15,4 @@ export default defineConfig({
       '@/': `${__dirname}/src/`,
     },
   },
-})
+});

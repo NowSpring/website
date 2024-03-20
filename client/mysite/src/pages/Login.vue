@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { ref, reactive, toRaw } from 'vue';
+import { useRouter } from 'vue-router';
+import EventService from '@/plugins/EventService';
+
+const router = useRouter();
+
+const formState = reactive({
+  username: '',
+  password: '',
+});
+
+const showPassword = ref(false);
+
+const submitLogin = () => {
+  EventService.submitLogin(toRaw(formState))
+    .then((response) => {
+      window.localStorage.setItem('token', response.data.token);
+      window.localStorage.setItem('id', response.data.id);
+      window.localStorage.setItem('username', response.data.username);
+      router.push({ name: 'home' });
+    })
+    .catch((error) => {
+      console.log('Error' + error);
+    });
+};
+</script>
 <template>
   <Popup>
     <template v-slot:title>
@@ -36,32 +63,3 @@
     </template>
   </Popup>
 </template>
-
-<script setup lang="ts">
-import { ref, reactive, toRaw } from 'vue';
-import { useRouter } from 'vue-router';
-import EventService from '@/plugins/EventService';
-import Popup from '@/components/Popup.vue';
-
-const router = useRouter();
-
-const formState = reactive({
-  username: '',
-  password: '',
-});
-
-const showPassword = ref(false);
-
-const submitLogin = () => {
-  EventService.submitLogin(toRaw(formState))
-    .then((response) => {
-      window.localStorage.setItem('token', response.data.token);
-      window.localStorage.setItem('id', response.data.id);
-      window.localStorage.setItem('username', response.data.username);
-      router.push({ name: 'home' });
-    })
-    .catch((error) => {
-      console.log('Error' + error);
-    });
-};
-</script>
