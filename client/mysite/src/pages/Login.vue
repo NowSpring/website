@@ -17,8 +17,6 @@ const submitLogin = () => {
   EventService.submitLogin(toRaw(formState))
     .then((response) => {
       window.localStorage.setItem('token', response.data.token);
-      // window.localStorage.setItem('id', response.data.id);
-      // window.localStorage.setItem('username', response.data.username);
       userPinia.username = response.data.user.username;
       userPinia.email = response.data.user.email;
       router.push({ name: 'home' });

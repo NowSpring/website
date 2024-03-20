@@ -4,16 +4,9 @@ import { userStore } from '@/stores/user';
 
 const router = useRouter();
 const userPinia = userStore();
-// const username = ref('');
-
-// onMounted(() => {
-//   username.value = window.localStorage.getItem('username');
-// });
 
 const logOut = () => {
   window.localStorage.removeItem('token');
-  // window.localStorage.removeItem('user_id');
-  // window.localStorage.removeItem('username');
   router.push({ name: 'login' });
 };
 </script>
