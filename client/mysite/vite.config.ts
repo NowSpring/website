@@ -19,4 +19,7 @@ export default defineConfig({
       '@/': `${__dirname}/src/`,
     },
   },
+  server: {
+    host: true
+  }
 });
