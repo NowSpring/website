@@ -4,8 +4,9 @@ import EventService from '@/plugins/EventService';
 
 const isDialog = shallowRef(false);
 const isEdit = ref(false);
-const formReference = ref(null);
 const isValid = ref(false);
+const isLoading = ref(false);
+const formReference = ref(null);
 
 const userPinia = userStore();
 const formState = reactive({ ...userPinia.$state });
@@ -29,13 +30,19 @@ const canSubmit = computed(() => {
   );
 });
 
+const formReset = () => {
+  Object.assign(formState, { ...userPinia.$state });
+  isEdit.value = false;
+};
+
 const updateProfile = () => {
   const id = ref(userPinia.id);
-  console.log('formState.username:', formState.username);
+  isLoading.value = true;
   EventService.updateProfile(id.value, toRaw(formState))
     .then((response) => {
       userPinia.username = response.data.username;
       userPinia.email = response.data.email;
+      isLoading.value = !isLoading.value;
       isDialog.value = !isDialog.value;
       isEdit.value = !isEdit.value;
     })
@@ -86,11 +93,20 @@ const updateProfile = () => {
             </v-btn>
             <v-btn
               class="ml-4"
-              color="outline"
+              color="green"
+              :loading="isLoading"
               :disabled="!canSubmit"
               @click="updateProfile"
             >
               登録
+            </v-btn>
+            <v-btn
+              class="ml-4"
+              color="red"
+              :disabled="!isEdit"
+              @click="formReset"
+            >
+              編集破棄
             </v-btn>
           </v-form>
         </template>
