@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'dbbackup',
     'django_filters',
     # Installed app
-    'members'
+    'members',
+    'comics'
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,7 @@ REST_FRAMEWORK = {
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/'dump'}
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
