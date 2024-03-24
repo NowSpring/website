@@ -54,11 +54,20 @@ type SignupInfo = {
   password: string;
 };
 
+type ProfileInfo = {
+  id: string;
+  username: string;
+  email: string;
+};
+
 export default {
   submitLogin(logininfo: LoginInfo) {
     return loginClient.post('api-token-auth/', logininfo);
   },
   submitSignup(signupinfo: SignupInfo) {
     return signupClient.post('member/', signupinfo);
+  },
+  updateProfile(id, profileinfo: ProfileInfo) {
+    return apiClient.patch(`member/${id}/`, profileinfo);
   },
 };

@@ -1,15 +1,14 @@
-version: '3.8'
+version: "3.8"
 
 services:
-
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
     volumes:
-     - './server:/usr/src'
+      - "./server:/usr/src"
     ports:
-     - "8000:8000"
+      - "8000:8000"
     tty: true
     stdin_open: true
 
@@ -18,12 +17,13 @@ services:
       context: ./client
       dockerfile: Dockerfile
     volumes:
-     - './client/mysite:/usr/src'
+      - "./client/mysite:/usr/src"
     ports:
-     - "8080:8080"
+      #  - "8080:8080"
+      - "5173:5173"
     tty: true
     stdin_open: true
     depends_on:
-     - server
+      - server
     environment:
-     - NODE_ENV=development
+      - NODE_ENV=development

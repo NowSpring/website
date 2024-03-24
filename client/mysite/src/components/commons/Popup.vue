@@ -1,14 +1,17 @@
 <template>
   <div class="overlay">
-    <v-card width="400px" class="mx-auto mt-5">
-      <v-card-title class="d-flex justify-center">
-        <slot name="title"> </slot>
-      </v-card-title>
-      <v-card-text>
-        <v-form>
-          <slot name="content"></slot>
-        </v-form>
-      </v-card-text>
+    <v-card width="400px">
+      <v-row align-content="center">
+        <v-col align="center">
+          <v-card-title>
+            <slot name="title"></slot>
+          </v-card-title>
+
+          <v-card-text>
+            <slot name="content"></slot>
+          </v-card-text>
+        </v-col>
+      </v-row>
     </v-card>
   </div>
 </template>

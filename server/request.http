@@ -12,8 +12,8 @@ POST http://localhost:8000/api-token-auth/
 Content-Type: application/json
 
 {
-    "username": "test01",
-    "password": "is0397sv"
+    "username": "fffffffffff",
+    "password": "eeeeee"
 }
 
 ###
@@ -37,15 +37,12 @@ Content-Type: application/json
 ###
 # @prompt token
 
-PUT http://localhost:8000/api/member/2/
+PATCH http://localhost:8000/api/member/15/
 Content-Type: application/json
 Authorization: Token {{token}}
 
 {
-  "username": "test01",
-  "email": "test01@co.jp",
-  "password": "is0397sv",
-  "is_superuser": "true"
+  "username": "eee"
 }
 
 

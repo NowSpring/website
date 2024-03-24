@@ -7,7 +7,8 @@ const userPinia = userStore();
 
 const logOut = () => {
   window.localStorage.removeItem('token');
-  window.sessionStorage.removeItem('user');
+  window.localStorage.removeItem('user');
+  userPinia.resetStore();
   router.push({ name: 'login' });
 };
 </script>
@@ -19,10 +20,7 @@ const logOut = () => {
 
     <v-spacer></v-spacer>
 
-    <v-btn text @click="() => $router.push({ name: 'home' })">
-      <span>{{ userPinia.username }}</span>
-      <v-icon>mdi-account</v-icon>
-    </v-btn>
+    <Dialog></Dialog>
 
     <v-btn text @click="logOut">
       <span class="mr-2"> Logout </span>

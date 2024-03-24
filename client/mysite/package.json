@@ -20,6 +20,7 @@
     "axios": "^1.6.7",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
+    "just-clone": "^6.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",

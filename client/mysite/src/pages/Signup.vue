@@ -1,47 +1,47 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useForm } from 'vee-validate';
-import * as yup from 'yup';
 import EventService from '@/plugins/EventService';
 
 const router = useRouter();
 
-const schema = yup.object({
-  username: yup.string().required().label('UserName'),
-  email: yup
-    .string()
-    .email()
-    .required()
-    .label('E-mail')
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'E-mail must be a valid email'),
-  password: yup.string().min(6).required(),
+const showPassword = ref(false);
+const formReference = ref(null);
+const isValid = ref(false);
+
+const formState = reactive({
+  username: '',
+  email: '',
+  password: '',
 });
 
-const { defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: schema,
-});
-
-const vuetifyConfig = (state): Record<string, any> => ({
-  props: {
-    'error-messages': state.errors,
+const fieldRules = reactive({
+  required: (value: string) => !!value || 'This field is required.',
+  email: (value: string) => {
+    const pattern =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(value) || 'Invalid email address.';
   },
 });
 
-const [username, usernameProps] = defineField('username', vuetifyConfig);
-const [email, emailProps] = defineField('email', vuetifyConfig);
-const [password, passwordProps] = defineField('password', vuetifyConfig);
+const canSubmit = computed(() => {
+  return isValid.value;
+});
 
-const showPassword = ref(false);
+const formReset = () => {
+  if (formReference.value) {
+    formReference.value.reset();
+  }
+};
 
-const onSubmit = handleSubmit((values) => {
-  EventService.submitSignup(values)
+const submitSignup = () => {
+  EventService.submitSignup(toRaw(formState))
     .then((response) => {
       router.push({ name: 'login' });
     })
     .catch((error) => {
       console.error('Error:', error);
     });
-});
+};
 </script>
 
 <template>
@@ -50,32 +50,41 @@ const onSubmit = handleSubmit((values) => {
       <h3 class="title font-weight-bold">Sign Up</h3>
     </template>
     <template v-slot:content>
-      <v-text-field
-        prepend-icon="mdi-account-circle"
-        v-model="username"
-        v-bind="usernameProps"
-        label="UserName"
-      />
-      <v-text-field
-        prepend-icon="mdi-email"
-        v-model="email"
-        v-bind="emailProps"
-        label="Email"
-        type="email"
-      />
-      <v-text-field
-        :type="showPassword ? 'text' : 'password'"
-        @click:append="showPassword = !showPassword"
-        prepend-icon="mdi-lock"
-        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        v-model="password"
-        v-bind="passwordProps"
-        label="Password"
-      />
-      <v-btn color="primary" @click.prevent="onSubmit"> 登録 </v-btn>
-      <v-btn color="outline" class="ml-4" @click="resetForm()">
-        リセット
-      </v-btn>
+      <v-form ref="formReference" v-model="isValid">
+        <v-text-field
+          label="UserName"
+          prepend-icon="mdi-account-circle"
+          v-model="formState.username"
+          :rules="[fieldRules.required]"
+        />
+        <v-text-field
+          type="email"
+          label="Email"
+          prepend-icon="mdi-email"
+          v-model="formState.email"
+          :rules="[fieldRules.required, fieldRules.email]"
+        />
+        <v-text-field
+          label="Password"
+          prepend-icon="mdi-lock"
+          autocomplete="off"
+          v-model="formState.password"
+          :rules="[fieldRules.required]"
+          :type="showPassword ? 'text' : 'password'"
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append="showPassword = !showPassword"
+        />
+        <v-btn
+          color="primary"
+          :disabled="!canSubmit"
+          @click.prevent="submitSignup"
+        >
+          登録
+        </v-btn>
+        <v-btn color="outline" class="ml-4" @click="formReset()">
+          リセット
+        </v-btn>
+      </v-form>
     </template>
   </Popup>
 </template>

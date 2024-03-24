@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Test01 from '@/pages/tests/Test01.vue';
-import Test02 from '@/pages/tests/Test02.vue';
+import Test01 from '@/tests/pages/Test01.vue';
+import Test02 from '@/tests/pages/Test02.vue';
+import Dialog from '@/tests/pages/index.vue';
 import Login from '@/pages/Login.vue';
 import Signup from '@/pages/Signup.vue';
 import Home from '@/pages/Home.vue';
@@ -18,6 +19,11 @@ const routes = [
         path: '02',
         name: 'test02',
         component: Test02,
+      },
+      {
+        path: 'dialog',
+        name: 'dialog',
+        component: Dialog,
       },
     ],
   },
