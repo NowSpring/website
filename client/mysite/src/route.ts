@@ -5,6 +5,7 @@ import Dialog from '@/tests/pages/index.vue';
 import Login from '@/pages/Login.vue';
 import Signup from '@/pages/Signup.vue';
 import Home from '@/pages/Home.vue';
+import ComicMaster from '@/pages/ComicMaster.vue';
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/comicmaster',
+    name: 'comicmaster',
+    component: ComicMaster,
     meta: { requiresAuth: true },
   },
 ];

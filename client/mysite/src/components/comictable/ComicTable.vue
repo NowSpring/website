@@ -1,0 +1,95 @@
+<template>
+  <v-data-table
+    v-if="headers && datas"
+    :headers="headers"
+    :items="datas"
+    :items-per-page="5"
+    class="elevation-1 my-3 mx-auto custom-datatable"
+    style="width: 1000px"
+  >
+    <template v-slot:item="{ item }">
+      <tr :key="item.key" @click="clickRow(item)">
+        <td v-for="header in headers" :key="header.value">
+          <v-img
+            v-if="header.value === 'cover'"
+            :src="item.cover"
+            :aspect-ratio="16 / 9"
+            height="9vw"
+            min-height="100px"
+            width="16vw"
+            min-width="160px"
+            class="ma-0 pa-0"
+          ></v-img>
+          <span v-if="header.value === 'title'">
+            {{ item.title }}
+          </span>
+          <span v-if="header.value === 'author'">
+            {{ item.author }}
+          </span>
+          <span v-if="header.value === 'era'">
+            {{ item.era }}
+          </span>
+          <span v-if="header.value === 'publisher'">
+            {{ item.publisher }}
+          </span>
+          <span v-if="header.value === 'target'">
+            {{ item.target }}
+          </span>
+          <span v-if="header.value === 'genre'">
+            {{ item.genre }}
+          </span>
+          <span v-if="header.value === 'version_number'">
+            {{ item.version_number }}
+          </span>
+          <span v-if="header.value === 'episode_number'">
+            {{ item.episode_number }}
+          </span>
+          <spna v-if="header.value === 'review'">
+            <v-btn icon>
+              <v-icon x-large>mdi-pencil</v-icon>
+            </v-btn>
+          </spna>
+        </td>
+      </tr>
+    </template>
+  </v-data-table>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const props = defineProps({
+  datas: Array,
+  headers: Array,
+  linkname: String,
+});
+
+const { datas, headers, linkname } = toRefs(props);
+
+const clickRow = (item) => {
+  if (linkname.value !== 'pdf') {
+    router.push({ name: linkname.value, params: { id: item.id } });
+  } else {
+    window.open(item.pdf, '_blank');
+  }
+};
+
+onMounted(() => {
+  // console.log(datas.value)
+  // console.log(headers.value); // headersの中身をコンソールに出力
+});
+</script>
+
+<style scoped>
+.custom-datatable .v-data-table__wrapper {
+  /* テーブル全体のフォントサイズを大きくする */
+  font-size: 16px;
+}
+
+.custom-datatable .v-data-table-header {
+  /* ヘッダー行のテキストを太字にする */
+  font-weight: bold;
+}
+</style>
