@@ -20,7 +20,7 @@ const logOut = () => {
 
     <v-spacer></v-spacer>
 
-    <Dialog></Dialog>
+    <ProfileDialog></ProfileDialog>
 
     <v-btn text @click="logOut">
       <span class="mr-2"> Logout </span>

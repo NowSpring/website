@@ -45,5 +45,10 @@ Authorization: Token {{token}}
   "username": "eee"
 }
 
+###
+# @prompt token
 
+GET http://localhost:8000/api/review/master/?member_id=1
+Content-Type: application/json
+Authorization: Token {{token}}
 

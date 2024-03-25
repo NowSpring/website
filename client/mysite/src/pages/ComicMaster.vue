@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
+import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
 import TopBar from '@/components/topbar/TopBar.vue';
 import ComicTable from '@/components/comictable/ComicTable.vue';
 
 const route = useRoute();
+const userPinia = userStore();
 const isParentRoute = computed(() => route.name === 'comicmaster');
 
-const comic_masters = ref(null);
+const comic_masters = ref([]);
+const review_masters = ref([]);
 
 const headers = ref([
   {
@@ -66,23 +69,47 @@ const getComicMaster = async () => {
   try {
     const response = await EventService.getComicMaster();
     comic_masters.value = response.data;
-    // console.log("comic_masters.value:", comic_masters.value);
+    console.log('comic_masters.value:', comic_masters.value);
   } catch (error) {
     console.log('Error_home' + error);
   }
 };
 
-onMounted(() => {
+const getReviewMaster = async (id: string) => {
+  try {
+    const response = await EventService.getReviewMaster(id);
+    review_masters.value = response.data;
+    console.log('review_master.value:', review_masters.value);
+  } catch (error) {
+    console.log('Error_home' + error);
+  }
+};
+
+const comicsWithReviews = computed(() =>
+  comic_masters.value.map((comic) => {
+    const review = review_masters.value.find(
+      (review) => review.comic_master === comic.id,
+    );
+    return { ...comic, hasReview: review !== undefined };
+  }),
+);
+
+onMounted(async () => {
   const token = localStorage.getItem('token');
   if (token !== null) {
-    getComicMaster(token);
+    await getComicMaster();
+    await getReviewMaster(userPinia.id);
   }
 });
 </script>
 <template>
   <TopBar v-if="isParentRoute"></TopBar>
   <v-container v-if="isParentRoute">
-    <ComicTable :datas="comic_masters" :headers="headers" :linkname="linkname">
+    <ComicTable
+      :datas="comicsWithReviews"
+      :headers="headers"
+      :linkname="linkname"
+    >
     </ComicTable>
   </v-container>
   <router-view></router-view>

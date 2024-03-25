@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <v-card width="400px">
+    <v-card :width="width">
       <v-row align-content="center">
         <v-col align="center">
           <v-card-title>
@@ -16,4 +16,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const width = inject('width', '400px');
+</script>

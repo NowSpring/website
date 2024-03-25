@@ -4,7 +4,7 @@
     :headers="headers"
     :items="datas"
     :items-per-page="5"
-    class="elevation-1 my-3 mx-auto custom-datatable"
+    class="elevation-1 my-3 mx-auto"
     style="width: 1000px"
   >
     <template v-slot:item="{ item }">
@@ -44,11 +44,10 @@
           <span v-if="header.value === 'episode_number'">
             {{ item.episode_number }}
           </span>
-          <spna v-if="header.value === 'review'">
-            <v-btn icon>
-              <v-icon x-large>mdi-pencil</v-icon>
-            </v-btn>
-          </spna>
+          <span v-if="header.value === 'review'">
+            <!-- {{ item.hasReview }} -->
+            <ReviewDialog :hasReview="item.hasReview"></ReviewDialog>
+          </span>
         </td>
       </tr>
     </template>
@@ -82,14 +81,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
-.custom-datatable .v-data-table__wrapper {
-  /* テーブル全体のフォントサイズを大きくする */
-  font-size: 16px;
-}
-
-.custom-datatable .v-data-table-header {
-  /* ヘッダー行のテキストを太字にする */
-  font-weight: bold;
-}
-</style>
+<style scoped></style>

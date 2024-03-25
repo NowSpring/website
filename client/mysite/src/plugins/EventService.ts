@@ -67,10 +67,13 @@ export default {
   submitSignup(signupinfo: SignupInfo) {
     return signupClient.post('member/', signupinfo);
   },
-  updateProfile(id, profileinfo: ProfileInfo) {
+  updateProfile(id: string, profileinfo: ProfileInfo) {
     return apiClient.patch(`member/${id}/`, profileinfo);
   },
   getComicMaster() {
     return apiClient.get('comic/master');
+  },
+  getReviewMaster(id: string) {
+    return apiClient.get(`review/master/?member_id=${id}`);
   },
 };
