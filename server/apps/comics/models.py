@@ -74,30 +74,33 @@ class ComicVersion(models.Model):
   
   title = models.ForeignKey(ComicMaster, on_delete = models.CASCADE)
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  version_number = models.IntegerField(verbose_name = "巻数", validators=[MinValueValidator(0)])
+  version = models.PositiveIntegerField(verbose_name = "巻数", validators=[MinValueValidator(0)])
   cover = models.ImageField(upload_to = "cover/version/", null = False, blank = True)
   
   class Meta:
       
         verbose_name_plural = 'バージョン'
+        unique_together = ('title', 'version',)
     
   def __str__(self):
         
-        return  '{}_{}'.format(self.title, str(self.version_number))
+        return  '{} {}巻'.format(self.title, str(self.version))
       
 
 class ComicEpisode(models.Model):
   
-  title_version = models.ForeignKey(ComicVersion, on_delete = models.CASCADE)
+  title = models.ForeignKey(ComicMaster, on_delete = models.CASCADE)
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  episode_number = models.IntegerField(verbose_name = "エピソード数", validators=[MinValueValidator(0)])
+  version = models.PositiveIntegerField(verbose_name = "巻数", validators=[MinValueValidator(0)])
+  episode = models.PositiveIntegerField(verbose_name = "エピソード数", validators=[MinValueValidator(0)])
   cover = models.ImageField(upload_to = "cover/episode/", null = False, blank = True)
   pdf = models.FileField(upload_to = "pdf/episode/", validators = [FileExtensionValidator(['pdf'])])
   
   class Meta:
       
         verbose_name_plural = 'エピソード'
+        unique_together = ('title', 'version', 'episode',)
     
   def __str__(self):
         
-        return '{}_{}'.format(self.title_version, str(self.episode_number))
+        return '{} {}巻 {}話'.format(self.title, str(self.version), str(self.episode))

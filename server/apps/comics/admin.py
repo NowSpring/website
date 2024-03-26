@@ -23,17 +23,17 @@ class ComicMasterAdminConfig(admin.ModelAdmin):
 class ComicVersionAdminConfig(admin.ModelAdmin):
   
     model = ComicVersion
-    search_fields = ('title', 'version_number',)
-    list_filter = ('title', 'version_number',)
-    ordering = ('title', 'version_number',)
-    list_display = ('title', 'version_number',)
+    search_fields = ('title', 'version',)
+    list_filter = ('title', 'version',)
+    ordering = ('title', 'version',)
+    list_display = ('title', 'version',)
     fieldsets = (
-        (None, {'fields': ('title', 'version_number', 'cover',)}),
+        (None, {'fields': ('title', 'version', 'cover',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('title', 'version_number', 'cover',)}
+            'fields': ('title', 'version', 'cover',)}
          ),
     )
 
@@ -41,17 +41,17 @@ class ComicVersionAdminConfig(admin.ModelAdmin):
 class ComicEpisodeAdminConfig(admin.ModelAdmin):
   
     model = ComicEpisode
-    search_fields = ('title_version', 'episode_number',)
-    list_filter = ('title_version', 'episode_number',)
-    ordering = ('title_version', 'episode_number',)
-    list_display = ('title_version', 'episode_number',)
+    search_fields = ('title', 'version', 'episode',)
+    list_filter = ('title', 'version', 'episode',)
+    ordering = ('title', 'version', 'episode',)
+    list_display = ('title', 'version', 'episode',)
     fieldsets = (
-        (None, {'fields': ('title_version', 'episode_number', 'cover', 'pdf',)}),
+        (None, {'fields': ('title', 'version', 'episode', 'cover', 'pdf',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('title_version', 'episode_number', 'cover', 'pdf',)}
+            'fields': ('title', 'version', 'episode', 'cover', 'pdf',)}
          ),
     )
 
