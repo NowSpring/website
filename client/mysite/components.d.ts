@@ -14,6 +14,10 @@ declare module 'vue' {
     ReviewDialog: typeof import('./src/components/comictable/ReviewDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ScoreDialog: typeof import('./src/components/comictable/ScoreDialog.vue')['default']
+    ScoreMenu: typeof import('./src/components/comictable/ScoreMenu.vue')['default']
+    ScoreRadar: typeof import('./src/components/comictable/ScoreRadar.vue')['default']
+    ScoreSlider: typeof import('./src/components/comictable/ScoreSlider.vue')['default']
     TopBar: typeof import('./src/components/topbar/TopBar.vue')['default']
   }
 }

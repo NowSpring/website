@@ -79,7 +79,7 @@ const getReviewMaster = async (id: string) => {
   try {
     const response = await EventService.getReviewMaster(id);
     review_masters.value = response.data;
-    console.log('review_master.value:', review_masters.value);
+    // console.log('review_master.value:', review_masters.value);
   } catch (error) {
     console.log('Error_home' + error);
   }

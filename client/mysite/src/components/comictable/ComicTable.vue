@@ -1,3 +1,30 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const props = defineProps({
+  datas: Array,
+  headers: Array,
+  linkname: String,
+});
+
+const { datas, headers, linkname } = toRefs(props);
+
+const clickRow = (item) => {
+  if (linkname.value !== 'pdf') {
+    router.push({ name: linkname.value, params: { id: item.id } });
+  } else {
+    window.open(item.pdf, '_blank');
+  }
+};
+
+onMounted(() => {
+  // console.log(datas.value)
+  // console.log(headers.value); // headersの中身をコンソールに出力
+});
+</script>
+
 <template>
   <v-data-table
     v-if="headers && datas"
@@ -53,32 +80,5 @@
     </template>
   </v-data-table>
 </template>
-
-<script setup lang="ts">
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
-const props = defineProps({
-  datas: Array,
-  headers: Array,
-  linkname: String,
-});
-
-const { datas, headers, linkname } = toRefs(props);
-
-const clickRow = (item) => {
-  if (linkname.value !== 'pdf') {
-    router.push({ name: linkname.value, params: { id: item.id } });
-  } else {
-    window.open(item.pdf, '_blank');
-  }
-};
-
-onMounted(() => {
-  // console.log(datas.value)
-  // console.log(headers.value); // headersの中身をコンソールに出力
-});
-</script>
 
 <style scoped></style>

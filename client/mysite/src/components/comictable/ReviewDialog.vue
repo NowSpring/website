@@ -10,7 +10,7 @@ const props = defineProps({
 const width = '1000px';
 provide('width', width);
 
-const isDialog = ref(false);
+const isReviewDialog = ref(false);
 const isEdit = ref(false);
 const isValid = ref(false);
 const isLoading = ref(false);
@@ -19,14 +19,14 @@ const formReference = ref(null);
 const userPinia = userStore();
 const formState = reactive({ ...userPinia.$state });
 
-const fieldRules = reactive({
-  required: (value: string) => !!value || 'This field is required.',
-  email: (value: string) => {
-    const pattern =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return pattern.test(value) || 'Invalid email address.';
-  },
-});
+const scoreAlpha = ref(0);
+const scoreBeta = ref(0);
+const scoreCamma = ref(0);
+const scoreDelta = ref(0);
+const scoreEpsilon = ref(0);
+
+const scoreMin = 0;
+const scoreMax = 5;
 
 const canSubmit = computed(() => {
   return (
@@ -51,7 +51,7 @@ const updateProfile = () => {
       userPinia.username = response.data.username;
       userPinia.email = response.data.email;
       isLoading.value = !isLoading.value;
-      isDialog.value = !isDialog.value;
+      isReviewDialog.value = !isReviewDialog.value;
       isEdit.value = !isEdit.value;
     })
     .catch((error) => {
@@ -62,7 +62,7 @@ const updateProfile = () => {
 
 <template>
   <div class="pa-4 text-center">
-    <v-dialog v-model="isDialog" max-width="100000">
+    <v-dialog v-model="isReviewDialog" max-width="100000">
       <template v-slot:activator="{ props: activatorProps }">
         <v-btn depressed v-bind="activatorProps">
           <v-icon x-large :color="hasReview ? 'red' : 'grey'"
@@ -80,21 +80,19 @@ const updateProfile = () => {
             <v-row>
               <v-col col="8"></v-col>
               <v-col col="4">
-                <v-text-field
-                  label="UserName"
-                  prepend-icon="mdi-account-circle"
-                  v-model="formState.username"
-                  :disabled="!isEdit"
-                  :rules="[fieldRules.required]"
-                />
-                <v-text-field
-                  type="email"
-                  label="Email"
-                  prepend-icon="mdi-email"
-                  v-model="formState.email"
-                  :disabled="!isEdit"
-                  :rules="[fieldRules.required, fieldRules.email]"
-                />
+                <v-slider
+                  v-model="scoreAlpha"
+                  :min="scoreMin"
+                  :max="scoreMax"
+                  step="0.1"
+                  thumb-label
+                  ticks
+                  label="スライダーラベル"
+                >
+                  <template #append>
+                    <ScoreMenu title="スライダーラベル" />
+                  </template>
+                </v-slider>
               </v-col>
             </v-row>
             <v-row></v-row>
