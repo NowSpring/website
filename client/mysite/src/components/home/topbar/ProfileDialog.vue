@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { ref, reactive, computed, toRaw } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService';
 
-const isDialog = shallowRef(false);
+const isDialog = ref(false);
 const isEdit = ref(false);
 const isValid = ref(false);
 const isLoading = ref(false);

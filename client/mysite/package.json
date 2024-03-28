@@ -18,11 +18,13 @@
     "@vee-validate/i18n": "^4.12.6",
     "@vee-validate/rules": "^4.12.6",
     "axios": "^1.6.7",
+    "chart.js": "^4.4.2",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "just-clone": "^6.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
+    "vue-chartjs": "^5.3.0",
     "vue-router": "^4.3.0",
     "vuetify": "^3.5.8"
   },

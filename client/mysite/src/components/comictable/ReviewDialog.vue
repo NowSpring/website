@@ -19,11 +19,13 @@ const formReference = ref(null);
 const userPinia = userStore();
 const formState = reactive({ ...userPinia.$state });
 
-const scoreAlpha = ref(0);
-const scoreBeta = ref(0);
-const scoreCamma = ref(0);
-const scoreDelta = ref(0);
-const scoreEpsilon = ref(0);
+const scores = ref({
+  scoreAlpha: 0,
+  scoreBeta: 0,
+  scoreCamma: 0,
+  scoreDelta: 0,
+  scoreEpsilon: 0,
+});
 
 const scoreMin = 0;
 const scoreMax = 5;
@@ -64,10 +66,14 @@ const updateProfile = () => {
   <div class="pa-4 text-center">
     <v-dialog v-model="isReviewDialog" max-width="100000">
       <template v-slot:activator="{ props: activatorProps }">
-        <v-btn depressed v-bind="activatorProps">
-          <v-icon x-large :color="hasReview ? 'red' : 'grey'"
-            >mdi-pencil</v-icon
-          >
+        <v-btn
+          icon="mdi-pencil"
+          size="x-large"
+          elevation="0"
+          depressed
+          v-bind="activatorProps"
+          :color="hasReview ? 'red' : 'grey'"
+        >
         </v-btn>
       </template>
 
@@ -78,7 +84,9 @@ const updateProfile = () => {
         <template v-slot:content>
           <v-form ref="formReference" v-model="isValid">
             <v-row>
-              <v-col col="8"></v-col>
+              <v-col col="8">
+                <ScoreRadar />
+              </v-col>
               <v-col col="4">
                 <v-slider
                   v-model="scoreAlpha"

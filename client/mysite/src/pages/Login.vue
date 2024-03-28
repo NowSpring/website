@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, reactive, computed, toRaw } from 'vue';
 import { useRouter } from 'vue-router';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService';
@@ -26,7 +27,7 @@ const submitLogin = () => {
       userPinia.id = response.data.user.id;
       userPinia.username = response.data.user.username;
       userPinia.email = response.data.user.email;
-      router.push({ name: 'home' });
+      router.push({ name: 'master' });
     })
     .catch((error) => {
       console.log('Error' + error);
@@ -68,7 +69,7 @@ const submitLogin = () => {
         <v-btn
           class="ml-4"
           color="outline"
-          @click="() => $router.push({ path: '/signup' })"
+          @click="() => $router.push({ name: '/signup' })"
         >
           新規作成
         </v-btn>

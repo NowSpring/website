@@ -70,8 +70,8 @@ export default {
   updateProfile(id: string, profileinfo: ProfileInfo) {
     return apiClient.patch(`member/${id}/`, profileinfo);
   },
-  getComicMaster() {
-    return apiClient.get('comic/master');
+  getComic(meta: string) {
+    return apiClient.get(`comic/${meta}`);
   },
   getReviewMaster(id: string) {
     return apiClient.get(`review/master/?member_id=${id}`);

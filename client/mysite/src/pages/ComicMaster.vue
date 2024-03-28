@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { ref, computed, onMounted } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
-import TopBar from '@/components/topbar/TopBar.vue';
-import ComicTable from '@/components/comictable/ComicTable.vue';
 
-const route = useRoute();
 const userPinia = userStore();
-const isParentRoute = computed(() => route.name === 'comicmaster');
-
-const comic_masters = ref([]);
-const review_masters = ref([]);
 
 const headers = ref([
   {
@@ -63,32 +56,37 @@ const headers = ref([
   },
 ]);
 
-const linkname = 'comicversion';
+const meta = 'master';
+const nextLink = 'comicversion';
 
-const getComicMaster = async () => {
+const comicMasters = ref([]);
+
+const getComic = async (meta: string) => {
   try {
-    const response = await EventService.getComicMaster();
-    comic_masters.value = response.data;
-    console.log('comic_masters.value:', comic_masters.value);
+    const response = await EventService.getComic(meta);
+    comicMasters.value = response.data;
+    console.log('comicMasters.value:', comicMasters.value);
   } catch (error) {
-    console.log('Error_home' + error);
+    console.log('error:' + error);
   }
 };
+
+const reviewMasters = ref([]);
 
 const getReviewMaster = async (id: string) => {
   try {
     const response = await EventService.getReviewMaster(id);
-    review_masters.value = response.data;
-    // console.log('review_master.value:', review_masters.value);
+    reviewMasters.value = response.data;
+    // console.log('reviewMaster.value:', reviewMasters.value);
   } catch (error) {
-    console.log('Error_home' + error);
+    console.log('error:' + error);
   }
 };
 
 const comicsWithReviews = computed(() =>
-  comic_masters.value.map((comic) => {
-    const review = review_masters.value.find(
-      (review) => review.comic_master === comic.id,
+  comicMasters.value.map((comic) => {
+    const review = reviewMasters.value.find(
+      (review) => review.comicMaster === comic.id,
     );
     return { ...comic, hasReview: review !== undefined };
   }),
@@ -97,20 +95,16 @@ const comicsWithReviews = computed(() =>
 onMounted(async () => {
   const token = localStorage.getItem('token');
   if (token !== null) {
-    await getComicMaster();
+    await getComic(meta);
     await getReviewMaster(userPinia.id);
   }
 });
 </script>
 <template>
-  <TopBar v-if="isParentRoute"></TopBar>
-  <v-container v-if="isParentRoute">
-    <ComicTable
-      :datas="comicsWithReviews"
-      :headers="headers"
-      :linkname="linkname"
-    >
-    </ComicTable>
-  </v-container>
-  <router-view></router-view>
+  <ComicTable
+    :datas="comicsWithReviews"
+    :headers="headers"
+    :nextLink="nextLink"
+  >
+  </ComicTable>
 </template>

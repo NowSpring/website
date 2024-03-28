@@ -8,15 +8,15 @@ from comics.models import ComicMaster, ComicVersion, ComicEpisode
 
 class ReviewMaster(models.Model):
     
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_master')
-    comic_master = models.ForeignKey(ComicMaster, on_delete=models.CASCADE, related_name='review_master')
+    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewMaster')
+    comicMaster = models.ForeignKey(ComicMaster, on_delete=models.CASCADE, related_name='reviewMaster')
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    score_1 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_2 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_3 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_4 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_5 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     comment = models.TextField(null=True, blank=True)
     
     class Meta:
@@ -25,21 +25,21 @@ class ReviewMaster(models.Model):
     
     def __str__(self):
       
-        return f"Review by {self.member} on {self.comic_master}"
+        return f"{self.comicMaster}"
 
 
 
 class ReviewVersion(models.Model):
     
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_version')
-    comic_version = models.ForeignKey(ComicVersion, on_delete=models.CASCADE, related_name='reviews_version')
+    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewVersion')
+    comicVersion = models.ForeignKey(ComicVersion, on_delete=models.CASCADE, related_name='reviewVersion')
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    score_1 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_2 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_3 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_4 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_5 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     comment = models.TextField(null=True, blank=True)
     
     class Meta:
@@ -48,20 +48,20 @@ class ReviewVersion(models.Model):
     
     def __str__(self):
       
-        return f"Review by {self.member} on {self.comic_version}"
+        return f"{self.comicVersion}"
 
 
 class ReviewEpisode(models.Model):
     
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='review_episode')
-    comic_episode = models.ForeignKey(ComicEpisode, on_delete=models.CASCADE, related_name='review_episode')
+    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewEpisode')
+    comicEpisode = models.ForeignKey(ComicEpisode, on_delete=models.CASCADE, related_name='reviewEpisode')
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    score_1 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_2 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_3 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_4 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    score_5 = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
+    scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     comment = models.TextField(null=True, blank=True)
     
     class Meta:
@@ -70,4 +70,4 @@ class ReviewEpisode(models.Model):
     
     def __str__(self):
       
-        return f"Review by {self.member} on {self.comic_episode}"
+        return f"{self.comicEpisode}"

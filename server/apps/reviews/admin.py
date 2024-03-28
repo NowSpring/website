@@ -5,17 +5,17 @@ from reviews.models import ReviewMaster, ReviewVersion, ReviewEpisode
 class ReviewMasterAdminConfig(admin.ModelAdmin):
   
     model = ReviewMaster
-    search_fields = ('member', 'comic_master', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_filter = ('member', 'comic_master', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_display = ('member', 'comic_master', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    ordering = ('member', 'comic_master',)
+    search_fields = ('member', 'comicMaster', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_filter = ('member', 'comicMaster', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_display = ('member', 'comicMaster', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    ordering = ('member', 'comicMaster',)
     fieldsets = (
-        (None, {'fields': ('member', 'comic_master', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}),
+        (None, {'fields': ('member', 'comicMaster', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('member', 'comic_master', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}
+            'fields': ('member', 'comicMaster', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}
          ),
     )
     
@@ -23,17 +23,17 @@ class ReviewMasterAdminConfig(admin.ModelAdmin):
 class ReviewVersionAdminConfig(admin.ModelAdmin):
   
     model = ReviewVersion
-    search_fields = ('member', 'comic_version', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_filter = ('member', 'comic_version', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_display = ('member', 'comic_version', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    ordering = ('member', 'comic_version',)
+    search_fields = ('member', 'comicVersion', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_filter = ('member', 'comicVersion', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_display = ('member', 'comicVersion', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    ordering = ('member', 'comicVersion',)
     fieldsets = (
-        (None, {'fields': ('member', 'comic_version', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}),
+        (None, {'fields': ('member', 'comicVersion', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('member', 'comic_version', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}
+            'fields': ('member', 'comicVersion', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}
          ),
     )
 
@@ -41,17 +41,17 @@ class ReviewVersionAdminConfig(admin.ModelAdmin):
 class ReviewEpisodeAdminConfig(admin.ModelAdmin):
   
     model = ReviewEpisode
-    search_fields = ('member', 'comic_episode', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_filter = ('member', 'comic_episode', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    list_display = ('member', 'comic_episode', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5',)
-    ordering = ('member', 'comic_episode',)
+    search_fields = ('member', 'comicEpisode', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_filter = ('member', 'comicEpisode', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    list_display = ('member', 'comicEpisode', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon',)
+    ordering = ('member', 'comicEpisode',)
     fieldsets = (
-        (None, {'fields': ('member', 'comic_episode', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}),
+        (None, {'fields': ('member', 'comicEpisode', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('member', 'comic_episode', 'score_1', 'score_2', 'score_3', 'score_4', 'score_5', 'comment')}
+            'fields': ('member', 'comicEpisode', 'scoreAlpha', 'scoreBeta', 'scoreCamma', 'scoreDelta', 'scoreEpsilon', 'comment')}
          ),
     )
 

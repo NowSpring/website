@@ -40,15 +40,15 @@ const routes = [
   },
   {
     path: '/',
-    name: 'home',
     component: Home,
     meta: { requiresAuth: true },
-  },
-  {
-    path: '/comicmaster',
-    name: 'comicmaster',
-    component: ComicMaster,
-    meta: { requiresAuth: true },
+    children: [
+      {
+        path: 'master',
+        name: 'master',
+        component: ComicMaster,
+      },
+    ],
   },
 ];
 

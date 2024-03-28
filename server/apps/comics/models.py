@@ -64,6 +64,7 @@ class ComicMaster(models.Model):
     class Meta:
       
         verbose_name_plural = 'マスター'
+        unique_together = ('title',)
     
     def __str__(self):
         

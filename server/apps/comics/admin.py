@@ -8,7 +8,7 @@ class ComicMasterAdminConfig(admin.ModelAdmin):
     search_fields = ('title', 'author', 'era', 'publisher', 'target', 'genre',)
     list_filter = ('title', 'author', 'era', 'publisher', 'target', 'genre',)
     ordering = ('title',)
-    list_display = ('title', 'author', 'era', 'publisher', 'target', 'genre',)
+    list_display = ('id', 'title', 'author', 'era', 'publisher', 'target', 'genre',)
     fieldsets = (
         (None, {'fields': ('title', 'author', 'era', 'publisher', 'target', 'genre', 'cover', )}),
     )
