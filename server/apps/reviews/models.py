@@ -6,68 +6,56 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from comics.models import ComicMaster, ComicVersion, ComicEpisode
 
 
-class ReviewMaster(models.Model):
-    
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewMaster')
-    comicMaster = models.ForeignKey(ComicMaster, on_delete=models.CASCADE, related_name='reviewMaster')
+class ReviewBase(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
     comment = models.TextField(null=True, blank=True)
-    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     class Meta:
-      
+
+        abstract = True  # Django はこのモデルのテーブルを作成しません
+
+
+class ReviewMaster(ReviewBase):
+
+    comicID = models.ForeignKey(ComicMaster, db_column='comic_id', on_delete=models.CASCADE, related_name='reviewMaster')
+
+    class Meta:
+
         verbose_name_plural = 'マスターレビュー'
-    
+
     def __str__(self):
-      
-        return f"{self.comicMaster}"
+
+        return f"{self.comicID}"
 
 
+class ReviewVersion(ReviewBase):
 
-class ReviewVersion(models.Model):
-    
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewVersion')
-    comicVersion = models.ForeignKey(ComicVersion, on_delete=models.CASCADE, related_name='reviewVersion')
+    comicID = models.ForeignKey(ComicVersion, db_column='comic_id', on_delete=models.CASCADE, related_name='reviewVersion')
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    comment = models.TextField(null=True, blank=True)
-    
     class Meta:
-      
+
         verbose_name_plural = 'バージョンレビュー'
-    
+
     def __str__(self):
-      
-        return f"{self.comicVersion}"
+
+        return f"{self.comicID}"
 
 
-class ReviewEpisode(models.Model):
-    
-    member = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewEpisode')
-    comicEpisode = models.ForeignKey(ComicEpisode, on_delete=models.CASCADE, related_name='reviewEpisode')
+class ReviewEpisode(ReviewBase):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    scoreAlpha = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreBeta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreCamma = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreDelta = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    scoreEpsilon = models.DecimalField(max_digits=2, decimal_places=1, validators=[MinValueValidator(0.0), MaxValueValidator(5.0)])
-    comment = models.TextField(null=True, blank=True)
-    
+    comicID = models.ForeignKey(ComicEpisode, db_column='comic_id', on_delete=models.CASCADE, related_name='reviewEpisode')
+
     class Meta:
-      
+
         verbose_name_plural = 'エピソードレビュー'
-    
+
     def __str__(self):
-      
-        return f"{self.comicEpisode}"
+
+        return f"{self.comicID}"

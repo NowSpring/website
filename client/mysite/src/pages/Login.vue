@@ -69,7 +69,7 @@ const submitLogin = () => {
         <v-btn
           class="ml-4"
           color="outline"
-          @click="() => $router.push({ name: '/signup' })"
+          @click="() => $router.push({ name: 'signup' })"
         >
           新規作成
         </v-btn>

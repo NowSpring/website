@@ -12,8 +12,8 @@ POST http://localhost:8000/api-token-auth/
 Content-Type: application/json
 
 {
-    "username": "fffffffffff",
-    "password": "eeeeee"
+    "username": "test",
+    "password": "test"
 }
 
 ###
@@ -62,9 +62,19 @@ Authorization: Token {{token}}
   "member": "1",
   "comicMaster": "f4d8b1df-1d95-45c9-9c2a-ed855a6aa8e3",
   "scoreAlpha": 1.2,
-  "scoreBeta": 2.1, 
+  "scoreBeta": 2.1,
   "scoreCamma": 3.2,
   "scoreDelta": 4.2,
   "scoreEpsilon": 3.3,
   "comment": "hello"
+}
+
+###
+# @prompt token
+PATCH http://localhost:8000/api/review/master/1d39f9df-bd7f-423b-a134-756df0d8a78e/
+Content-Type: application/json
+Authorization: Token {{token}}
+
+{
+  "comment": "hello, world"
 }

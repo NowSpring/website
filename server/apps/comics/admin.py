@@ -3,7 +3,7 @@ from django.contrib import admin
 from comics.models import ComicMaster, ComicVersion, ComicEpisode
 
 class ComicMasterAdminConfig(admin.ModelAdmin):
-  
+
     model = ComicMaster
     search_fields = ('title', 'author', 'era', 'publisher', 'target', 'genre',)
     list_filter = ('title', 'author', 'era', 'publisher', 'target', 'genre',)
@@ -21,12 +21,12 @@ class ComicMasterAdminConfig(admin.ModelAdmin):
 
 
 class ComicVersionAdminConfig(admin.ModelAdmin):
-  
+
     model = ComicVersion
     search_fields = ('title', 'version',)
     list_filter = ('title', 'version',)
     ordering = ('title', 'version',)
-    list_display = ('title', 'version',)
+    list_display = ('id', 'title', 'version',)
     fieldsets = (
         (None, {'fields': ('title', 'version', 'cover',)}),
     )
@@ -39,19 +39,19 @@ class ComicVersionAdminConfig(admin.ModelAdmin):
 
 
 class ComicEpisodeAdminConfig(admin.ModelAdmin):
-  
+
     model = ComicEpisode
-    search_fields = ('title', 'version', 'episode',)
-    list_filter = ('title', 'version', 'episode',)
-    ordering = ('title', 'version', 'episode',)
-    list_display = ('title', 'version', 'episode',)
+    search_fields = ('include', 'episode',)
+    list_filter = ('include', 'episode',)
+    ordering = ('include', 'episode',)
+    list_display = ('id', 'include', 'episode',)
     fieldsets = (
-        (None, {'fields': ('title', 'version', 'episode', 'cover', 'pdf',)}),
+        (None, {'fields': ('include', 'episode', 'cover', 'pdf',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('title', 'version', 'episode', 'cover', 'pdf',)}
+            'fields': ('include', 'episode', 'cover', 'pdf',)}
          ),
     )
 

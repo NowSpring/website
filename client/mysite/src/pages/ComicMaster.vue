@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
+import { provide } from 'vue';
 
 const userPinia = userStore();
 
@@ -11,7 +12,7 @@ const headers = ref([
     align: 'start',
     sortable: false,
     value: 'cover',
-    width: 100,
+    width: '100px',
   },
   {
     title: 'タイトル',
@@ -29,7 +30,7 @@ const headers = ref([
     title: '年代',
     value: 'era',
     sortable: true,
-    width: 100,
+    width: '100px',
   },
   {
     title: '出版社',
@@ -56,16 +57,15 @@ const headers = ref([
   },
 ]);
 
-const meta = 'master';
-const nextLink = 'comicversion';
+const nextLink = 'version';
 
 const comicMasters = ref([]);
 
-const getComic = async (meta: string) => {
+const getComicMasters = async () => {
   try {
-    const response = await EventService.getComic(meta);
+    const response = await EventService.getComicMasters();
     comicMasters.value = response.data;
-    console.log('comicMasters.value:', comicMasters.value);
+    // console.log('comicMasters.value:', comicMasters.value);
   } catch (error) {
     console.log('error:' + error);
   }
@@ -73,9 +73,9 @@ const getComic = async (meta: string) => {
 
 const reviewMasters = ref([]);
 
-const getReviewMaster = async (id: string) => {
+const getReviewMasters = async () => {
   try {
-    const response = await EventService.getReviewMaster(id);
+    const response = await EventService.getReviewMasters(userPinia.id);
     reviewMasters.value = response.data;
     // console.log('reviewMaster.value:', reviewMasters.value);
   } catch (error) {
@@ -86,17 +86,17 @@ const getReviewMaster = async (id: string) => {
 const comicsWithReviews = computed(() =>
   comicMasters.value.map((comic) => {
     const review = reviewMasters.value.find(
-      (review) => review.comicMaster === comic.id,
+      (review) => review.comicID === comic.id,
     );
-    return { ...comic, hasReview: review !== undefined };
+    return { ...comic, review: review || null };
   }),
 );
 
 onMounted(async () => {
   const token = localStorage.getItem('token');
   if (token !== null) {
-    await getComic(meta);
-    await getReviewMaster(userPinia.id);
+    await getComicMasters();
+    await getReviewMasters();
   }
 });
 </script>
@@ -107,4 +107,5 @@ onMounted(async () => {
     :nextLink="nextLink"
   >
   </ComicTable>
+  <router-view></router-view>
 </template>

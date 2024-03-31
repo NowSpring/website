@@ -5,14 +5,14 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class ComicMaster(models.Model):
-    
+
     ERA_TYPES = (
         ("1980", "1980"),
         ("1990", "1990"),
         ("2000", "2000"),
         ("2010", "2010"),
     )
-    
+
     PUBLISHER_TYPES = (
         ("エニックス", "エニックス"),
         ("学習研究科", "学習研究科"),
@@ -29,14 +29,14 @@ class ComicMaster(models.Model):
         ("講談社", "講談社"),
         ("集英社", "集英社"),
     )
-    
+
     TARGET_TYPES = (
         ("少女", "少女"),
         ("少年", "少年"),
         ("女性", "女性"),
         ("男性", "男性"),
     )
-    
+
     GENRE_TYPES = (
         ("4コマ", "4コマ"),
         ("SF", "SF"),
@@ -51,7 +51,7 @@ class ComicMaster(models.Model):
         ("恋愛", "恋愛"),
         ("時代劇", "時代劇"),
     )
-    
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(verbose_name = "タイトル", max_length = 100)
     author = models.CharField(verbose_name = "作者", max_length = 100)
@@ -60,48 +60,47 @@ class ComicMaster(models.Model):
     target = models.CharField(verbose_name = "対象", max_length = 100, choices = TARGET_TYPES)
     genre = models.CharField(verbose_name = "ジャンル", max_length = 100, choices = GENRE_TYPES)
     cover = models.ImageField(upload_to = "cover/master/", null = False, blank = True)
-    
+
     class Meta:
-      
+
         verbose_name_plural = 'マスター'
         unique_together = ('title',)
-    
+
     def __str__(self):
-        
+
         return self.title
-      
+
 
 class ComicVersion(models.Model):
-  
-  title = models.ForeignKey(ComicMaster, on_delete = models.CASCADE)
+
+  title = models.ForeignKey(ComicMaster, verbose_name = "タイトル", on_delete = models.CASCADE)
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   version = models.PositiveIntegerField(verbose_name = "巻数", validators=[MinValueValidator(0)])
   cover = models.ImageField(upload_to = "cover/version/", null = False, blank = True)
-  
+
   class Meta:
-      
+
         verbose_name_plural = 'バージョン'
         unique_together = ('title', 'version',)
-    
+
   def __str__(self):
-        
+
         return  '{} {}巻'.format(self.title, str(self.version))
-      
+
 
 class ComicEpisode(models.Model):
-  
-  title = models.ForeignKey(ComicMaster, on_delete = models.CASCADE)
+
+  include = models.ForeignKey(ComicVersion, verbose_name = "収録作品", on_delete = models.CASCADE)
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  version = models.PositiveIntegerField(verbose_name = "巻数", validators=[MinValueValidator(0)])
   episode = models.PositiveIntegerField(verbose_name = "エピソード数", validators=[MinValueValidator(0)])
   cover = models.ImageField(upload_to = "cover/episode/", null = False, blank = True)
   pdf = models.FileField(upload_to = "pdf/episode/", validators = [FileExtensionValidator(['pdf'])])
-  
+
   class Meta:
-      
+
         verbose_name_plural = 'エピソード'
-        unique_together = ('title', 'version', 'episode',)
-    
+        unique_together = ('include', 'episode',)
+
   def __str__(self):
-        
-        return '{} {}巻 {}話'.format(self.title, str(self.version), str(self.episode))
+
+        return '{} {}話'.format(self.include, str(self.episode))

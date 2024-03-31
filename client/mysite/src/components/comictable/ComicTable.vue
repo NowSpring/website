@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, onMounted, inject } from 'vue';
+import { ref, toRefs, onMounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -21,7 +21,7 @@ const clickRow = (item) => {
 };
 
 onMounted(() => {
-  // console.log(datas.value)
+  console.log('datas.value:', datas.value);
   // console.log(headers.value); // headersの中身をコンソールに出力
 });
 </script>
@@ -46,37 +46,50 @@ onMounted(() => {
                 height="9vw"
                 min-height="100px"
                 width="16vw"
-                min-width="160px"
+                min-width="100px"
                 class="ma-0 pa-0"
               ></v-img>
             </div>
           </span>
           <span v-if="header.value === 'title'">
-            <div align="left">{{ item.title }}</div>
+            <div align="left" class="text-truncate" style="max-width: 100px">
+              {{ item.title }}
+            </div>
           </span>
           <span v-if="header.value === 'author'">
-            <div align="left">{{ item.author }}</div>
+            <div align="left" class="text-truncate" style="max-width: 100px">
+              {{ item.author }}
+            </div>
           </span>
           <span v-if="header.value === 'era'">
-            <div align="left">{{ item.era }}</div>
+            <div align="left" class="text-truncate" style="max-width: 50px">
+              {{ item.era }}
+            </div>
           </span>
           <span v-if="header.value === 'publisher'">
-            <div align="left">{{ item.publisher }}</div>
+            <div align="left" class="text-truncate" style="max-width: 100px">
+              {{ item.publisher }}
+            </div>
           </span>
           <span v-if="header.value === 'target'">
-            <div align="left">{{ item.target }}</div>
+            <div align="left" class="text-truncate" style="max-width: 50px">
+              {{ item.target }}
+            </div>
           </span>
           <span v-if="header.value === 'genre'">
             <div align="left">{{ item.genre }}</div>
           </span>
-          <span v-if="header.value === 'version_number'">
-            <div align="right">{{ item.version_number }}</div>
+          <span v-if="header.value === 'version'">
+            <div align="right">{{ item.version }}</div>
           </span>
-          <span v-if="header.value === 'episode_number'">
-            <div align="right">{{ item.episode_number }}</div>
+          <span v-if="header.value === 'episode'">
+            <div align="right">{{ item.episode }}</div>
           </span>
           <span v-if="header.value === 'review'">
-            <ReviewDialog :hasReview="item.hasReview"></ReviewDialog>
+            <ReviewDialog
+              :review="item.review"
+              :comic_id="item.id"
+            ></ReviewDialog>
           </span>
         </td>
       </tr>

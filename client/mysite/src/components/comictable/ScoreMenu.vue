@@ -12,7 +12,8 @@ const location = 'end';
   <div class="text-center">
     <v-menu :location="location">
       <template v-slot:activator="{ props }">
-        <v-btn color="primary" dark v-bind="props"> Dropdown </v-btn>
+        <v-btn icon="mdi-information" elevation="0" dark v-bind="props">
+        </v-btn>
       </template>
 
       <v-card max-width="300px">

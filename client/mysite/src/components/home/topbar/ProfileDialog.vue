@@ -5,7 +5,6 @@ import EventService from '@/plugins/EventService';
 
 const isDialog = ref(false);
 const isEdit = ref(false);
-const isValid = ref(false);
 const isLoading = ref(false);
 const formReference = ref(null);
 
@@ -22,12 +21,9 @@ const fieldRules = reactive({
 });
 
 const canSubmit = computed(() => {
-  return (
-    isValid.value &&
-    !(
-      formState.username === userPinia.username &&
-      formState.email === userPinia.email
-    )
+  return !(
+    formState.username === userPinia.username &&
+    formState.email === userPinia.email
   );
 });
 
@@ -68,7 +64,7 @@ const updateProfile = () => {
           <h3 class="title font-weight-bold">Profile</h3>
         </template>
         <template v-slot:content>
-          <v-form ref="formReference" v-model="isValid">
+          <v-form ref="formReference" v-model="canSubmit">
             <v-text-field
               label="UserName"
               prepend-icon="mdi-account-circle"

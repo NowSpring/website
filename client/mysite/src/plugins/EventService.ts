@@ -70,10 +70,19 @@ export default {
   updateProfile(id: string, profileinfo: ProfileInfo) {
     return apiClient.patch(`member/${id}/`, profileinfo);
   },
-  getComic(meta: string) {
-    return apiClient.get(`comic/${meta}`);
+  getComicMasters() {
+    return apiClient.get(`comic/master/`);
   },
-  getReviewMaster(id: string) {
+  getComicVersions(title_id) {
+    return apiClient.get(`comic/version?title_id=${title_id}`);
+  },
+  getComicEpisodes(include_id) {
+    return apiClient.get(`comic/episode?include_id=${include_id}`);
+  },
+  getReviewMasters(id: string) {
     return apiClient.get(`review/master/?member_id=${id}`);
+  },
+  getReviewVersions(id: string) {
+    return apiClient.get(`review/version/?member_id=${id}`);
   },
 };

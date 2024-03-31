@@ -6,6 +6,8 @@ import Login from '@/pages/Login.vue';
 import Signup from '@/pages/Signup.vue';
 import Home from '@/pages/Home.vue';
 import ComicMaster from '@/pages/ComicMaster.vue';
+import ComicVersion from '@/pages/ComicVersion.vue';
+import ComicEpisode from '@/pages/ComicEpisode.vue';
 
 const routes = [
   {
@@ -40,6 +42,7 @@ const routes = [
   },
   {
     path: '/',
+    redirect: '/master',
     component: Home,
     meta: { requiresAuth: true },
     children: [
@@ -47,6 +50,18 @@ const routes = [
         path: 'master',
         name: 'master',
         component: ComicMaster,
+      },
+      {
+        path: 'version/:id',
+        name: 'version',
+        component: ComicVersion,
+        props: true,
+      },
+      {
+        path: 'episode/:id',
+        name: 'episode',
+        component: ComicEpisode,
+        props: true,
       },
     ],
   },
