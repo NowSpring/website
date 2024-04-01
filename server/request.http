@@ -12,7 +12,7 @@ POST http://localhost:8000/api-token-auth/
 Content-Type: application/json
 
 {
-    "username": "test",
+    "username": "test01",
     "password": "test"
 }
 
@@ -60,7 +60,7 @@ Authorization: Token {{token}}
 
 {
   "member": "1",
-  "comicMaster": "f4d8b1df-1d95-45c9-9c2a-ed855a6aa8e3",
+  "comicID": "658340a9-a66f-41e2-a03a-4e7fb861d2fe",
   "scoreAlpha": 1.2,
   "scoreBeta": 2.1,
   "scoreCamma": 3.2,

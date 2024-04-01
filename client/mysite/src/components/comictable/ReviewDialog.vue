@@ -4,10 +4,11 @@ import {
   reactive,
   computed,
   toRefs,
-  watch,
+  toRaw,
   watchEffect,
   provide,
   nextTick,
+  inject,
 } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService';
@@ -19,22 +20,25 @@ interface FormState {
   scoreDelta: number;
   scoreEpsilon: number;
   comment: string | null;
-  comic_id?: string; // オプショナルなプロパティ
-  member?: string; // オプショナルなプロパティ
+  comicID: string;
+  member: string;
 }
 
 const props = defineProps({
   review: Object,
-  comic_id: String,
+  comicID: String,
+  currentLink: String,
 });
-const { review, comic_id } = toRefs(props);
+
+const { review } = toRefs(props);
+const { comicID, currentLink } = props;
 
 const width = '1000px';
 provide('width', width);
 
+const isDialog = ref(false);
 const isEdit = ref(true);
 const isLoading = ref(false);
-const isReviewDialog = ref(false);
 const formReference = ref(null);
 
 const userPinia = userStore();
@@ -46,7 +50,7 @@ const formState: FormState = reactive({
   scoreDelta: 0,
   scoreEpsilon: 0,
   comment: null,
-  comic_id: comic_id.value, // 常にcomic_idをセット
+  comicID: comicID,
   member: userPinia.id,
 });
 
@@ -64,7 +68,7 @@ watchEffect(() => {
   }
   nextTick(() => {
     initialState = JSON.parse(JSON.stringify(formState));
-    console.log('initial:', initialState);
+    // console.log('initial:', initialState);
   });
 });
 
@@ -76,16 +80,6 @@ const shownLabels = {
   scoreEpsilon: 'イプシロン',
 };
 
-const scoreMin = 0;
-const scoreMax = 5;
-
-function formReset() {
-  Object.assign(formState, initialState);
-  if (review.value) {
-    isEdit.value = false;
-  }
-}
-
 const canSubmit = computed(() => {
   if (!initialState) return false;
   return Object.keys(formState).some((key) => {
@@ -94,11 +88,44 @@ const canSubmit = computed(() => {
     );
   });
 });
+
+const formReset = () => {
+  Object.assign(formState, initialState);
+  if (review.value) {
+    isEdit.value = false;
+  }
+};
+
+const submitReview = () => {
+  console.log('formState:', formState);
+  console.log('currentLink:', currentLink);
+  isLoading.value = true;
+  let promise;
+  if (review.value) {
+    promise = EventService.patchReview(
+      currentLink,
+      review.value.id,
+      toRaw(formState),
+    );
+  } else {
+    promise = EventService.postReview(currentLink, toRaw(formState));
+  }
+  promise
+    .then(() => {
+      isLoading.value = !isLoading.value;
+      isDialog.value = !isDialog.value;
+      isEdit.value = !isEdit.value;
+      initialState = JSON.parse(JSON.stringify(formState));
+    })
+    .catch((error) => {
+      console.log('Error' + error);
+    });
+};
 </script>
 
 <template>
   <div class="pa-4 text-center">
-    <v-dialog v-model="isReviewDialog" max-width="100000">
+    <v-dialog v-model="isDialog" max-width="100000">
       <template v-slot:activator="{ props: activatorProps }">
         <v-btn
           icon="mdi-pencil"
@@ -131,8 +158,8 @@ const canSubmit = computed(() => {
                   </v-subheader>
                   <v-slider
                     v-model="formState[rawLabel]"
-                    :min="scoreMin"
-                    :max="scoreMax"
+                    :min="0"
+                    :max="5"
                     :step="0.1"
                     thumb-label="always"
                     :disabled="!isEdit"
@@ -170,6 +197,7 @@ const canSubmit = computed(() => {
                   color="green"
                   :loading="isLoading"
                   :disabled="!canSubmit"
+                  @click="submitReview"
                 >
                   登録
                 </v-btn>

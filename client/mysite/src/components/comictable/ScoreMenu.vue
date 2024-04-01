@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
 const props = defineProps({
   modelValue: Boolean,
   title: String, // タイトルを渡すためのプロパティ

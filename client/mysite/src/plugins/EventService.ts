@@ -43,32 +43,43 @@ apiClient.interceptors.request.use(
   },
 );
 
-type LoginInfo = {
+type loginInfo = {
   username: string;
   password: string;
 };
 
-type SignupInfo = {
+type signupInfo = {
   username: string;
   email: string;
   password: string;
 };
 
-type ProfileInfo = {
+type profileInfo = {
   id: string;
   username: string;
   email: string;
 };
 
+type reviewInfo = {
+  scoreAlpha: number;
+  scoreBeta: number;
+  scoreCamma: number;
+  scoreDelta: number;
+  scoreEpsilon: number;
+  comment: string | null;
+  comicID: string;
+  member: string;
+};
+
 export default {
-  submitLogin(logininfo: LoginInfo) {
-    return loginClient.post('api-token-auth/', logininfo);
+  submitLogin(loginInfo: loginInfo) {
+    return loginClient.post('api-token-auth/', loginInfo);
   },
-  submitSignup(signupinfo: SignupInfo) {
-    return signupClient.post('member/', signupinfo);
+  submitSignup(signupInfo: signupInfo) {
+    return signupClient.post('member/', signupInfo);
   },
-  updateProfile(id: string, profileinfo: ProfileInfo) {
-    return apiClient.patch(`member/${id}/`, profileinfo);
+  updateProfile(id: string, profileInfo: profileInfo) {
+    return apiClient.patch(`member/${id}/`, profileInfo);
   },
   getComicMasters() {
     return apiClient.get(`comic/master/`);
@@ -79,10 +90,13 @@ export default {
   getComicEpisodes(include_id) {
     return apiClient.get(`comic/episode?include_id=${include_id}`);
   },
-  getReviewMasters(id: string) {
-    return apiClient.get(`review/master/?member_id=${id}`);
+  getReviews(currentLink: string, member_id: string) {
+    return apiClient.get(`review/${currentLink}/?member_id=${member_id}`);
   },
-  getReviewVersions(id: string) {
-    return apiClient.get(`review/version/?member_id=${id}`);
+  postReview(currentLink: string, reviewInfo: reviewInfo) {
+    return apiClient.post(`review/${currentLink}/`, reviewInfo);
+  },
+  patchReview(currentLink: string, review_id: string, reviewInfo: reviewInfo) {
+    return apiClient.patch(`review/${currentLink}/${review_id}/`, reviewInfo);
   },
 };

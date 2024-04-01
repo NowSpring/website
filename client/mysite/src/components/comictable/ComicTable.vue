@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRefs, onMounted, inject } from 'vue';
+import { toRefs, onMounted, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -7,21 +7,23 @@ const router = useRouter();
 const props = defineProps({
   datas: Array,
   headers: Array,
+  currentLink: String,
   nextLink: String,
 });
 
-const { datas, headers, nextLink } = toRefs(props);
+const { datas } = toRefs(props);
+const { headers, currentLink, nextLink } = props;
 
 const clickRow = (item) => {
-  if (nextLink.value !== 'pdf') {
-    router.push({ name: nextLink.value, params: { id: item.id } });
+  if (nextLink !== 'pdf') {
+    router.push({ name: nextLink, params: { id: item.id } });
   } else {
     window.open(item.pdf, '_blank');
   }
 };
 
 onMounted(() => {
-  console.log('datas.value:', datas.value);
+  // console.log('datas.value:', datas.value);
   // console.log(headers.value); // headersの中身をコンソールに出力
 });
 </script>
@@ -88,7 +90,8 @@ onMounted(() => {
           <span v-if="header.value === 'review'">
             <ReviewDialog
               :review="item.review"
-              :comic_id="item.id"
+              :comicID="item.id"
+              :currentLink="currentLink"
             ></ReviewDialog>
           </span>
         </td>

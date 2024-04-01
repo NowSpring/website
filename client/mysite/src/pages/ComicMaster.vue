@@ -2,11 +2,13 @@
 import { ref, computed, onMounted } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
-import { provide } from 'vue';
 
 const userPinia = userStore();
 
-const headers = ref([
+const currentLink = 'master';
+const nextLink = 'version';
+
+const headers = [
   {
     title: '',
     align: 'start',
@@ -55,9 +57,7 @@ const headers = ref([
     value: 'review',
     width: 100,
   },
-]);
-
-const nextLink = 'version';
+];
 
 const comicMasters = ref([]);
 
@@ -73,9 +73,9 @@ const getComicMasters = async () => {
 
 const reviewMasters = ref([]);
 
-const getReviewMasters = async () => {
+const getReviews = async () => {
   try {
-    const response = await EventService.getReviewMasters(userPinia.id);
+    const response = await EventService.getReviews(currentLink, userPinia.id);
     reviewMasters.value = response.data;
     // console.log('reviewMaster.value:', reviewMasters.value);
   } catch (error) {
@@ -96,7 +96,7 @@ onMounted(async () => {
   const token = localStorage.getItem('token');
   if (token !== null) {
     await getComicMasters();
-    await getReviewMasters();
+    await getReviews();
   }
 });
 </script>
@@ -104,6 +104,7 @@ onMounted(async () => {
   <ComicTable
     :datas="comicsWithReviews"
     :headers="headers"
+    :currentLink="currentLink"
     :nextLink="nextLink"
   >
   </ComicTable>
