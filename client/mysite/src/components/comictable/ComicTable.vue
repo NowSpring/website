@@ -4,15 +4,17 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const props = defineProps({
-  datas: Array,
-  headers: Array,
-  currentLink: String,
-  nextLink: String,
-});
+// const props = defineProps({
+//   datas: Array,
+//   headers: Array,
+//   currentLink: String,
+//   nextLink: String,
+// });
 
-const { datas } = toRefs(props);
-const { headers, currentLink, nextLink } = props;
+const datas = inject('datas');
+const headers = inject('headers');
+const nextLink = inject('nextLink');
+// const { headers, currentLink, nextLink } = props;
 
 const clickRow = (item) => {
   if (nextLink !== 'pdf') {
@@ -91,7 +93,6 @@ onMounted(() => {
             <ReviewDialog
               :review="item.review"
               :comicID="item.id"
-              :currentLink="currentLink"
             ></ReviewDialog>
           </span>
         </td>

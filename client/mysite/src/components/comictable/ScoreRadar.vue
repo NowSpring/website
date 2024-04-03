@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
 // @types/chart.jsの型付けを使用するためにimportしてます。
 import type { ChartData, ChartOptions } from 'chart.js';
 
@@ -37,29 +36,32 @@ ChartJS.register(
   Legend,
 );
 
-const props = defineProps({
-  labels: Array,
-  scores: Array,
-});
-
 // ここではchartに使うdataを登録していきます。
 // ChartData<'radar'>でRadar-Chartの型付けを使ってます。
 // 他にも<"bar">などがあります。
-const chartData = ref({
-  labels: props.labels,
+const data: ChartData<'radar'> = {
+  labels: [
+    'Eating',
+    'Drinking',
+    'Sleeping',
+    'Designing',
+    'Coding',
+    'Cycling',
+    'Running',
+  ],
   datasets: [
     {
-      label: 'My Second dataset',
+      label: 'Your Review',
       backgroundColor: 'rgba(255,99,132,0.2)',
       borderColor: 'rgba(255,99,132,1)',
       pointBackgroundColor: 'rgba(255,99,132,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(255,99,132,1)',
-      data: props.scores,
+      data: [28, 48, 40, 19, 96, 27, 100],
     },
   ],
-});
+};
 
 // ここではchartに使うoptionsを登録していきます。
 // ChartOptions<'radar'>でRadar-Chartの型付けを使ってます。
@@ -68,13 +70,9 @@ const options: ChartOptions<'radar'> = {
   responsive: true,
   maintainAspectRatio: false,
 };
-
-watchEffect(() => {
-  chartData.value.datasets[0].data = props.scores;
-});
 </script>
 
 <template>
   <!-- 定義したdataとoptionsを渡してあげます。 -->
-  <Radar :data="chartData" :options="options" />
+  <Radar :data="data" :options="options" />
 </template>

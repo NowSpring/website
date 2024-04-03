@@ -1,34 +1,92 @@
 from rest_framework import serializers
 
 from comics.models import ComicMaster, ComicVersion, ComicEpisode
+from reviews.models import ReviewMaster, ReviewVersion, ReviewEpisode
+from reviews.serializers import ReviewMasterSerializer, ReviewVersionSerializer, ReviewEpisodeSerializer
 
 
-class StrRepresentationMixin:
+class ComicMasterSerializer(serializers.ModelSerializer):
 
-    str_representation = serializers.SerializerMethodField()
-
-    def get_str_representation(self, obj):
-        return str(obj)
-
-
-class ComicMasterSerializer(StrRepresentationMixin, serializers.ModelSerializer):
+  representation = serializers.SerializerMethodField()
+  review = serializers.SerializerMethodField()
 
   class Meta:
 
     model = ComicMaster
-    fields = "__all__"
+    fields = ['id', 'title', 'author', 'era', 'publisher', 'target', 'genre', 'cover', 'representation', 'review']
+
+  def get_representation(self, obj):
+
+    return str(obj)
+
+  def get_review(self, obj):
+
+    member_id = self.context.get('request').query_params.get('member_id')
+    reviews = ReviewMaster.objects.filter(comicID=obj, member_id=member_id)
+    review = reviews.first()
+
+    if review is not None:
+
+      return ReviewMasterSerializer(review).data
+
+    else:
+
+      return None
 
 
-class ComicVersionSerializer(StrRepresentationMixin, serializers.ModelSerializer):
+class ComicVersionSerializer(serializers.ModelSerializer):
+
+  representation = serializers.SerializerMethodField()
+  review = serializers.SerializerMethodField()
 
   class Meta:
 
     model = ComicVersion
-    fields = "__all__"
+    fields = ["id", "version", "cover", "title_id", 'representation', 'review']
 
-class ComicEpisodeSerializer(StrRepresentationMixin, serializers.ModelSerializer):
+  def get_representation(self, obj):
+
+    return str(obj)
+
+  def get_review(self, obj):
+
+    member_id = self.context.get('request').query_params.get('member_id')
+    reviews = ReviewVersion.objects.filter(comicID=obj, member_id=member_id)
+    review = reviews.first()
+
+    if review is not None:
+
+        return ReviewVersionSerializer(review).data
+
+    else:
+
+        return None
+
+
+class ComicEpisodeSerializer(serializers.ModelSerializer):
+
+  representation = serializers.SerializerMethodField()
+  review = serializers.SerializerMethodField()
 
   class Meta:
 
     model = ComicEpisode
-    fields = "__all__"
+    fields = ["id", "episode", "cover", "include_id", 'representation', 'review']
+
+  def get_representation(self, obj):
+
+    return str(obj)
+
+  def get_review(self, obj):
+
+    member_id = self.context.get('request').query_params.get('member_id')
+    reviews = ReviewEpisode.objects.filter(comicID=obj, member_id=member_id)
+    review = reviews.first()
+
+    if review is not None:
+
+        return ReviewEpisodeSerializer(review).data
+
+    else:
+
+        return None

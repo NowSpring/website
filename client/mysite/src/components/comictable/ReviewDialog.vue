@@ -7,8 +7,8 @@ import {
   toRaw,
   watchEffect,
   provide,
-  nextTick,
   inject,
+  nextTick,
 } from 'vue';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService';
@@ -27,14 +27,14 @@ interface FormState {
 const props = defineProps({
   review: Object,
   comicID: String,
-  currentLink: String,
 });
-
-const { review } = toRefs(props);
-const { comicID, currentLink } = props;
 
 const width = '1000px';
 provide('width', width);
+
+const { review } = toRefs(props);
+const { comicID } = props;
+const currentLink = inject('currentLink');
 
 const isDialog = ref(false);
 const isEdit = ref(true);
@@ -145,7 +145,7 @@ const submitReview = () => {
           <v-form ref="formReference" v-model="canSubmit">
             <v-row>
               <v-col cols="7">
-                <!-- <ScoreRadar :labels="radarLabels" :scores="radarScores" /> -->
+                <ScoreRadar />
               </v-col>
               <v-col cols="5">
                 <div

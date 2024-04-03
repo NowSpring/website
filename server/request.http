@@ -48,6 +48,35 @@ Authorization: Token {{token}}
 ###
 # @prompt token
 
+GET http://localhost:8000/api/comic/master/?member_id=1
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+# @prompt token
+
+GET http://localhost:8000/api/comic/master/?member_id=1&exclude_id=658340a9-a66f-41e2-a03a-4e7fb861d2fe
+Content-Type: application/json
+Authorization: Token {{token}}
+
+
+###
+# @prompt token
+
+GET http://localhost:8000/api/comic/version/?member_id=1
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+# @prompt token
+
+GET http://localhost:8000/api/comic/version/?member_id=1&title_id=c98f151b-7023-4bd7-b8a0-f54147cdb704
+Content-Type: application/json
+Authorization: Token {{token}}
+
+###
+# @prompt token
+
 GET http://localhost:8000/api/review/master/?member_id=1
 Content-Type: application/json
 Authorization: Token {{token}}
@@ -71,7 +100,7 @@ Authorization: Token {{token}}
 
 ###
 # @prompt token
-PATCH http://localhost:8000/api/review/master/1d39f9df-bd7f-423b-a134-756df0d8a78e/
+PATCH http://localhost:8000/api/review/master/be617063-2a5f-46a7-b483-02f68000f5f2/
 Content-Type: application/json
 Authorization: Token {{token}}
 

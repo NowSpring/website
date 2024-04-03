@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { userStore } from '@/stores/user';
+import { comicMasterStore } from '@/stores/comic.ts';
 import EventService from '@/plugins/EventService.js';
+import { provide } from 'vue';
 
 const userPinia = userStore();
+const comicMasterPinia = comicMasterStore();
 
 const currentLink = 'master';
 const nextLink = 'version';
@@ -63,50 +66,38 @@ const comicMasters = ref([]);
 
 const getComicMasters = async () => {
   try {
-    const response = await EventService.getComicMasters();
+    const response = await EventService.getComicMasters({
+      member_id: userPinia.id,
+    });
     comicMasters.value = response.data;
-    // console.log('comicMasters.value:', comicMasters.value);
+    console.log('comicMasters.value:', comicMasters.value);
   } catch (error) {
     console.log('error:' + error);
   }
 };
-
-const reviewMasters = ref([]);
-
-const getReviews = async () => {
-  try {
-    const response = await EventService.getReviews(currentLink, userPinia.id);
-    reviewMasters.value = response.data;
-    // console.log('reviewMaster.value:', reviewMasters.value);
-  } catch (error) {
-    console.log('error:' + error);
-  }
-};
-
-const comicsWithReviews = computed(() =>
-  comicMasters.value.map((comic) => {
-    const review = reviewMasters.value.find(
-      (review) => review.comicID === comic.id,
-    );
-    return { ...comic, review: review || null };
-  }),
-);
 
 onMounted(async () => {
-  const token = localStorage.getItem('token');
-  if (token !== null) {
-    await getComicMasters();
-    await getReviews();
-  }
+  comicMasterPinia.fetchComics(userPinia.id);
+  await getComicMasters();
 });
+
+provide('datas', comicMasters);
+provide('headers', headers);
+provide('currentLink', currentLink);
+provide('nextLink', nextLink);
 </script>
-<template>
+
+<!-- <template>
   <ComicTable
-    :datas="comicsWithReviews"
+    :datas="comicMasters"
     :headers="headers"
     :currentLink="currentLink"
     :nextLink="nextLink"
   >
   </ComicTable>
   <router-view></router-view>
+</template> -->
+
+<template>
+  <ComicTable> </ComicTable>
 </template>

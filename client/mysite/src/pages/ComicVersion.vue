@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, provide } from 'vue';
 import { useRoute } from 'vue-router';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
 
 const route = useRoute();
-const userPinia = userStore();
 const titleId = computed(() => route.params.id);
-console.log(titleId);
+const userPinia = userStore();
 
-const headers = ref([
+const currentLink = 'version';
+const nextLink = 'episode';
+
+const headers = [
   {
     title: '',
     value: 'cover',
@@ -29,15 +31,16 @@ const headers = ref([
     value: 'review',
     width: '100px',
   },
-]);
-
-const nextLink = 'episode';
+];
 
 const comicVersions = ref([]);
 
 const getComicVersions = async () => {
   try {
-    const response = await EventService.getComicVersions(titleId.value);
+    const response = await EventService.getComicVersions({
+      member_id: userPinia.id,
+      title_id: titleId.value,
+    });
     comicVersions.value = response.data;
     console.log('comicVersions.value:', comicVersions.value);
   } catch (error) {
@@ -45,36 +48,16 @@ const getComicVersions = async () => {
   }
 };
 
-// const reviewVersions = ref([]);
-
-// const getReviewVersions = async (id: string) => {
-//   try {
-//     const response = await EventService.getReviewVersions(id);
-//     reviewVersions.value = response.data;
-//     // console.log('reviewVersion.value:', reviewVersions.value);
-//   } catch (error) {
-//     console.log('error:' + error);
-//   }
-// };
-
-// const comicsWithReviews = computed(() =>
-//   comicVersions.value.map((comic) => {
-//     const review = reviewVersions.value.find(
-//       (review) => review.comicMaster === comic.id,
-//     );
-//     return { ...comic, hasReview: review !== undefined };
-//   }),
-// );
-
 onMounted(async () => {
-  const token = localStorage.getItem('token');
-  if (token !== null) {
-    await getComicVersions();
-    // await getReviewVersions(userPinia.id);
-  }
+  await getComicVersions();
+  console.log('titleId:', titleId.value);
 });
+
+provide('datas', comicVersions);
+provide('headers', headers);
+provide('currentLink', currentLink);
+provide('nextLink', nextLink);
 </script>
 <template>
-  <ComicTable :datas="comicVersions" :headers="headers" :nextLink="nextLink">
-  </ComicTable>
+  <ComicTable> </ComicTable>
 </template>
