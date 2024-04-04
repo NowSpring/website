@@ -52,8 +52,8 @@ class ComicEpisodeViewSet(viewsets.ModelViewSet):
 
   queryset = ComicEpisode.objects.all()
   serializer_class = ComicEpisodeSerializer
-  # filter_backends = [DjangoFilterBackend]
-  # filterset_class = ComicEpisodeFilter
+  filter_backends = [DjangoFilterBackend]
+  filterset_class = ComicEpisodeFilter
 
   def get_queryset(self):
 

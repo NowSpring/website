@@ -37,7 +37,7 @@ const comicVersions = ref([]);
 
 const getComicVersions = async () => {
   try {
-    const response = await EventService.getComicVersions({
+    const response = await EventService.getComicReview(currentLink, {
       member_id: userPinia.id,
       title_id: titleId.value,
     });
@@ -50,7 +50,6 @@ const getComicVersions = async () => {
 
 onMounted(async () => {
   await getComicVersions();
-  console.log('titleId:', titleId.value);
 });
 
 provide('datas', comicVersions);
@@ -58,6 +57,7 @@ provide('headers', headers);
 provide('currentLink', currentLink);
 provide('nextLink', nextLink);
 </script>
+
 <template>
   <ComicTable> </ComicTable>
 </template>

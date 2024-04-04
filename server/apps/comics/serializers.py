@@ -71,7 +71,7 @@ class ComicEpisodeSerializer(serializers.ModelSerializer):
   class Meta:
 
     model = ComicEpisode
-    fields = ["id", "episode", "cover", "include_id", 'representation', 'review']
+    fields = ["id", "episode", "cover", "pdf", "include_id", 'representation', 'review']
 
   def get_representation(self, obj):
 

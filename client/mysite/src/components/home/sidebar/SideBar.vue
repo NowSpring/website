@@ -11,7 +11,7 @@ const isSideBar = inject<Ref<boolean>>('isSideBar');
           icon="mdi-book-open-variant"
           size="x-large"
           elevation="0"
-          @click="() => $router.push({ path: '/login' })"
+          @click="() => $router.push({ name: 'master' })"
         >
         </v-btn>
       </v-list-item>
@@ -21,7 +21,7 @@ const isSideBar = inject<Ref<boolean>>('isSideBar');
           icon="mdi-magnify"
           size="x-large"
           elevation="0"
-          @click="() => $router.push({ path: '/login' })"
+          @click="() => $router.push({ name: 'master' })"
         ></v-btn>
       </v-list-item>
     </v-list>

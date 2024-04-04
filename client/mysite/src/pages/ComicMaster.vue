@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, provide } from 'vue';
 import { userStore } from '@/stores/user';
 import { comicMasterStore } from '@/stores/comic.ts';
 import EventService from '@/plugins/EventService.js';
-import { provide } from 'vue';
 
 const userPinia = userStore();
 const comicMasterPinia = comicMasterStore();
@@ -66,7 +65,7 @@ const comicMasters = ref([]);
 
 const getComicMasters = async () => {
   try {
-    const response = await EventService.getComicMasters({
+    const response = await EventService.getComicReview(currentLink, {
       member_id: userPinia.id,
     });
     comicMasters.value = response.data;
@@ -77,7 +76,9 @@ const getComicMasters = async () => {
 };
 
 onMounted(async () => {
-  comicMasterPinia.fetchComics(userPinia.id);
+  comicMasterPinia.fetchComics(currentLink, {
+    member_id: userPinia.id,
+  });
   await getComicMasters();
 });
 
@@ -87,17 +88,6 @@ provide('currentLink', currentLink);
 provide('nextLink', nextLink);
 </script>
 
-<!-- <template>
-  <ComicTable
-    :datas="comicMasters"
-    :headers="headers"
-    :currentLink="currentLink"
-    :nextLink="nextLink"
-  >
-  </ComicTable>
-  <router-view></router-view>
-</template> -->
-
 <template>
-  <ComicTable> </ComicTable>
+  <ComicTable @review-updated="getComicMasters"> </ComicTable>
 </template>

@@ -37,11 +37,11 @@ export const comicMasterStore = defineStore('comicMaster', {
     comics: [],
   }),
   actions: {
-    async fetchComics(member_id: string) {
+    async fetchComics(currentLink: string, params = {}) {
       try {
-        const response = await EventService.getComicMasters(member_id);
+        const response = await EventService.getComicReview(currentLink, params);
         this.comics = response.data as ComicMaster[];
-        console.log('Comics fetched successfully:', this.comics);
+        // console.log('Comics fetched successfully:', this.comics);
       } catch (error) {
         console.error('Failed to fetch comics:', error);
       }

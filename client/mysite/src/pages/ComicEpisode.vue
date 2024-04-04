@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, provide } from 'vue';
 import { useRoute } from 'vue-router';
 import { userStore } from '@/stores/user';
 import EventService from '@/plugins/EventService.js';
 
 const route = useRoute();
-const userPinia = userStore();
 const includeId = computed(() => route.params.id);
-console.log('includeID:', includeId);
+const userPinia = userStore();
+
+const currentLink = 'episode';
+const nextLink = 'pdf';
 
 const headers = ref([
   {
@@ -31,13 +33,14 @@ const headers = ref([
   },
 ]);
 
-const nextLink = 'pdf';
-
 const comicEpisodes = ref([]);
 
 const getComicEpisodes = async () => {
   try {
-    const response = await EventService.getComicEpisodes(includeId.value);
+    const response = await EventService.getComicReview(currentLink, {
+      member_id: userPinia.id,
+      include_id: includeId.value,
+    });
     comicEpisodes.value = response.data;
     console.log('comicEpisodes.value:', comicEpisodes.value);
   } catch (error) {
@@ -46,13 +49,14 @@ const getComicEpisodes = async () => {
 };
 
 onMounted(async () => {
-  const token = localStorage.getItem('token');
-  if (token !== null) {
-    await getComicEpisodes();
-  }
+  await getComicEpisodes();
 });
+
+provide('datas', comicEpisodes);
+provide('headers', headers);
+provide('currentLink', currentLink);
+provide('nextLink', nextLink);
 </script>
 <template>
-  <ComicTable :datas="comicEpisodes" :headers="headers" :nextLink="nextLink">
-  </ComicTable>
+  <ComicTable> </ComicTable>
 </template>

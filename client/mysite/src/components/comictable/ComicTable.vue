@@ -1,25 +1,18 @@
 <script setup lang="ts">
-import { toRefs, onMounted, inject } from 'vue';
+import { ref, onMounted, provide, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-// const props = defineProps({
-//   datas: Array,
-//   headers: Array,
-//   currentLink: String,
-//   nextLink: String,
-// });
-
 const datas = inject('datas');
 const headers = inject('headers');
 const nextLink = inject('nextLink');
-// const { headers, currentLink, nextLink } = props;
 
 const clickRow = (item) => {
   if (nextLink !== 'pdf') {
     router.push({ name: nextLink, params: { id: item.id } });
   } else {
+    console.log('item.pdf:', item.pdf);
     window.open(item.pdf, '_blank');
   }
 };
@@ -93,6 +86,7 @@ onMounted(() => {
             <ReviewDialog
               :review="item.review"
               :comicID="item.id"
+              @review-updated="$emit('review-updated')"
             ></ReviewDialog>
           </span>
         </td>

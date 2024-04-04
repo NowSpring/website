@@ -81,27 +81,10 @@ export default {
   updateProfile(id: string, profileInfo: profileInfo) {
     return apiClient.patch(`member/${id}/`, profileInfo);
   },
-  getComicMasters(params = {}) {
+  getComicReview(currentLink: string, params = {}) {
     const queryParams = new URLSearchParams(params).toString();
-    return apiClient.get(`comic/master/?${queryParams}`);
+    return apiClient.get(`comic/${currentLink}/?${queryParams}`);
   },
-  getComicVersions(params = {}) {
-    const queryParams = new URLSearchParams(params).toString();
-    return apiClient.get(`comic/version?${queryParams}`);
-  },
-  getComicEpisodes(params = {}) {
-    const queryParams = new URLSearchParams(params).toString();
-    return apiClient.get(`comic/episode?${queryParams}`);
-  },
-  // getComicMasters(member_id: string) {
-  //   return apiClient.get(`comic/master?member_id=${member_id}`);
-  // },
-  // getComicVersions(title_id: string) {
-  //   return apiClient.get(`comic/version?title_id=${title_id}`);
-  // },
-  // getComicEpisodes(include_id: string) {
-  //   return apiClient.get(`comic/episode?include_id=${include_id}`);
-  // },
   getReviews(currentLink: string, member_id: string) {
     return apiClient.get(`review/${currentLink}/?member_id=${member_id}`);
   },

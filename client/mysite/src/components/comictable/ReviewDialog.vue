@@ -25,6 +25,7 @@ interface FormState {
 }
 
 const props = defineProps({
+  idDialog: Boolean,
   review: Object,
   comicID: String,
 });
@@ -54,7 +55,7 @@ const formState: FormState = reactive({
   member: userPinia.id,
 });
 
-let initialState: FormState | null = null;
+let initialState = ref<FormState | null>(null);
 
 watchEffect(() => {
   if (review.value) {
@@ -67,6 +68,7 @@ watchEffect(() => {
     isEdit.value = false;
   }
   nextTick(() => {
+    // initialState.value = toRaw(formState);
     initialState = JSON.parse(JSON.stringify(formState));
     // console.log('initial:', initialState);
   });
@@ -81,6 +83,8 @@ const shownLabels = {
 };
 
 const canSubmit = computed(() => {
+  console.log('formState:', formState);
+  console.log('initialState:', initialState);
   if (!initialState) return false;
   return Object.keys(formState).some((key) => {
     return (
@@ -96,9 +100,11 @@ const formReset = () => {
   }
 };
 
+const emit = defineEmits(['review-updated']);
+
 const submitReview = () => {
-  console.log('formState:', formState);
-  console.log('currentLink:', currentLink);
+  // console.log('formState:', formState);
+  // console.log('currentLink:', currentLink);
   isLoading.value = true;
   let promise;
   if (review.value) {
@@ -112,10 +118,11 @@ const submitReview = () => {
   }
   promise
     .then(() => {
+      emit('review-updated');
+      initialState.value = toRaw(formState);
       isLoading.value = !isLoading.value;
       isDialog.value = !isDialog.value;
       isEdit.value = !isEdit.value;
-      initialState = JSON.parse(JSON.stringify(formState));
     })
     .catch((error) => {
       console.log('Error' + error);
